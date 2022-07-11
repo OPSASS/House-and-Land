@@ -191,8 +191,15 @@ block body
             each post in posts.slice(0, 18)
               a(href="/mua-ban-bds/"+post.slug).opost
                 if post.service === "vip"
-                  .ribbon
-                  .vip-title CẦN BÁN GẤP
+                  if post.need === "Bán"
+                    .ribbon
+                    .vip-title CẦN BÁN GẤP
+                  else if post.need === "Cho thuê"
+                    .ribbon
+                    .vip-title CHO THUÊ GẤP 
+                  else 
+                    .ribbon
+                    .vip-title NHƯỢNG GẤP
                 each upload in uploads
                   if upload.postId === post.postId
                     if upload.files[0]
@@ -276,91 +283,84 @@ block body
         h2(style="padding: 10px 0 20px;") Tin đã hết hạn của bạn
         if expiredPosts.length > 0
           .o3xn
-            each post in expiredPosts.slice(0, 18)
-              a(href="/mua-ban-bds/"+post.slug).opost
-                if post.service === "vip"
-                  if post.need === "Bán"
+            each epost in expiredPosts.slice(0, 18)
+              a(href="/mua-ban-bds/"+epost.slug).opost
+                if epost.service === "vip"
+                  if epost.need === "Bán"
                     .ribbon
                     .vip-title CẦN BÁN GẤP
-                  else if post.need === "Cho thuê"
+                  else if epost.need === "Cho thuê"
                     .ribbon
                     .vip-title CHO THUÊ GẤP 
                   else 
                     .ribbon
                     .vip-title NHƯỢNG GẤP
-                each upload in uploads2
-                  if upload.postId == post.postId
-                    if upload.files[0]
-                      .imgpost
-                        if post.status === "successful"
-                          img.ksf.oimg(src="/img/ok.png", alt="alt") 
-                        img.oimg(src=url+"posts/"+upload.files[0].fileName)
-                        .img-length
-                          .giuangang
-                            span.bx.bx-time(style="margin-right: 3px;")
-                            span= moment(post.createdAt).locale('vi').fromNow()
-                          div
-                            span(style="margin-right: 3px;")= upload.files.length
-                            span.bx.bx-images
-                    else
-                      .imgpost
-                        if post.status === "successful"
-                          img.ksf.oimg(src="/img/ok.png", alt="alt") 
-                        img.oimg(src="/img/no-image.png")
-                        .img-length
-                          .ngang
-                            i.bx.bx-time(style="margin-right: 3px;")
-                            p= moment(post.createdAt).locale('vi').fromNow()
+                .imgpost
+                  each upload2 in uploads2
+                    if upload2.files[0]
+                      if epost.status === "successful"
+                        img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                      img.oimg(src=url+"posts/"+upload2.files[0].fileName)
+                    //- else 
+                    //-   if post.status === "successful"
+                    //-     img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                    //-   img.oimg(src="/img/no-image.png")
+                    .img-length
+                      .giuangang
+                        span.bx.bx-time(style="margin-right: 3px;")
+                        span= moment(epost.createdAt).locale('vi').fromNow()
+                      div
+                        span(style="margin-right: 3px;")= upload2.files.length
+                        span.bx.bx-images
                 .khungtit
-                  h3.haidong= post.title
+                  h3.haidong= epost.title
                   .ngang
                     .ngang
                       i.bx.bx-money-withdraw
-                      if post.currency === "VNĐ"
-                        if post.money / 1000000000 < 1 
-                          b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                      if epost.currency === "VNĐ"
+                        if epost.money / 1000000000 < 1 
+                          b(style="padding: 0 5px")= epost.money / 1000000 + " triệu ~ " + (epost.money / epost.area / 1000000).toFixed(1) + " triệu/m²"
                         else 
-                          -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                          -const ty = epost.money / 1000000000 + " tỷ ~ " + (epost.money / epost.area / 1000000).toFixed(1) + " triệu/m²"
                             b#money_fix(style="padding: 0 5px")= ty
                       else
                         p &nbsp
-                        b(style="font-size: 14px")= post.currency
+                        b(style="font-size: 14px")= epost.currency
                   .ngang
                     .ngang
                       i.bx.bx-area
-                      b(style="padding: 0 5px")= post.area
+                      b(style="padding: 0 5px")= epost.area
                       p m²
                     .ttnha.ngang(style="margin-top: 0px")
-                      if post.so_tang == 0
+                      if epost.so_tang == 0
                       else
                         .ngang 
                           i.bx.bx-layer-plus
-                          b(style="padding: 0 20px 0 5px")= post.so_tang
-                      if post.so_phong_ngu == 0
+                          b(style="padding: 0 20px 0 5px")= epost.so_tang
+                      if epost.so_phong_ngu == 0
                       else
                         .ngang 
                           i.bx.bx-bed
-                          b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
-                      if post.so_phong_tam == 0
+                          b(style="padding: 0 20px 0 5px")= epost.so_phong_ngu
+                      if epost.so_phong_tam == 0
                       else
                         .ngang 
                           i.bx.bx-bath
-                          b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                          b(style="padding: 0 20px 0 5px")= epost.so_phong_tam
                   
                   .ngang
                     i.bx.bx-map-pin
-                    p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
-                  if post.way 
+                    p.haidong(style="padding: 0 5px")= epost.street + ", " + epost.ward + ", " + epost.district + ", " + epost.city
+                  if epost.way 
                     .ngang
                       i.bx.bx-purchase-tag-alt
-                      p.haidong(style="padding: 0 5px")= post.way
+                      p.haidong(style="padding: 0 5px")= epost.way
                   .ngang
                     i.bx.bxs-hand-right
-                    b(style="padding: 0 5px")= post.need
+                    b(style="padding: 0 5px")= epost.need
                   .ngang 
                     i.bx.bx-timer 
-                    b(style="padding: 0 5px") Còn
-                    b= countdown(new Date(post.timepost), null, countdown.DAYS | countdown.HOURS)
+                    b(style="padding: 0 5px") Tin đã hết hạn
         else
           .ngang
             p Bạn chưa đăng tin BDS nào.
