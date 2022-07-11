@@ -11,40 +11,25 @@ class UserController {
         if (req.isAuthenticated()) {
             const user = await User.findById(req.params.id);
             const avt =  await Upload.find({userId: user.id});
-            Posts.find({ userId: user._id }).sort({
+            const posts = await Posts.find({ userId: user._id }).sort({
+                service: -1,
+                createdAt: -1
+            });
+            const uploads = await Upload.find({});
+            const expiredPosts = await ExpiredPosts.find({ userId: user._id }).sort({
                 service: -1,
                 createdAt: -1
             })
-            .then(posts => {
-                Upload.find({}, (err, uploads) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        ExpiredPosts.find({ userId: user._id }).sort({
-                                service: -1,
-                                createdAt: -1
-                            })
-                            .then(expiredPosts => {
-                                Upload.find({}, (err, uploads2) => {
-                                    if (err) {
-                                        console.log(err);
-                                    } else {
-                                        res.render('pages/user/profile', {
-                                            title: user.username,
-                                            posts,
-                                            uploads,
-                                            expiredPosts,
-                                            uploads2,
-                                            avt
-                                        });
-                                    }
-                                    console.log(avt);
-                                });
-                            }).catch(err => next(err));
-                    }
-                });
+            const uploads2 = await Upload.find({ postId: expiredPosts.postId})
+            res.render('pages/user/profile', {
+                title: user.username,
+                posts,
+                uploads,
+                expiredPosts,
+                uploads2,
+                avt
             })
-            .catch(err => next(err));
+            
         } else {
             res.redirect('/auth/login');
         }
