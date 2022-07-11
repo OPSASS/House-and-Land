@@ -1,0 +1,18 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/post/dang-tin-thanh-cong.css")
+
+block body
+  .container 
+    if user
+      .link.font5
+        a(href="/") Trang chủ 
+        p > Đăng tin thành công
+      .giuadoc
+        img(src="/img/succept.png", alt="alt" style="width: 400px; height: 400px;")
+        h1 Tin của bạn đã được đăng thành công!
+        h3 Chúng tôi sẽ xem xét và phê duyệt bài viết của bạn sớm nhất có thể!
+        a(href="/posts/dang-tin-bds" style="padding-top: 20px;").nut.bo Đăng tin bất động sản khác
+        p(style="padding: 10px 0; ") Hoặc
+        a(href="/").nut.bo Trở về trang chủ

@@ -1,0 +1,129 @@
+/* ========login======== */
+a {
+    color: #999999;
+}
+
+.loginform {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginimg {
+    width: 40%;
+    height: 580px;
+    background-image: url("/img/10717714.jpg");
+    background-size: cover;
+    border-radius: 15px 0 0 15px;
+    color: #999999;
+}
+
+.loginof,
+.ask {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.loginof {
+    margin-top: 75%;
+}
+
+#mxh {
+    position: relative;
+}
+
+#mxh a {
+    margin: 10px 10px 20px;
+}
+
+.hovf:hover {
+    color: #3b5998;
+    background-image: radial-gradient(rgb(255, 255, 255) 50%, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent);
+}
+
+.hovt:hover {
+    color: rgb(28, 153, 230);
+}
+
+.hovg:hover {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.bntadd {
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: solid 2px #999999;
+    border-radius: 5px;
+    transition: .5s;
+}
+
+.bntadd:hover {
+    border: solid 2px #333333;
+    background-color: #333333;
+    color: white;
+    margin-top: 15px;
+    padding: 15px 50px;
+}
+
+form {
+    width: 40%;
+    height: 600px;
+    background-color: rgb(250, 250, 250);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group h1 {
+    margin: 50px 0 80px;
+    text-align: center;
+}
+
+.formitem {
+    width: 80%;
+    height: auto;
+}
+
+.odn {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.reme {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bntsm {
+    padding: 18px 35px;
+    margin-top: 20%;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #999999;
+    color: #333333;
+    transition: .5s;
+}
+
+.bntsm:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.formitem a:hover {
+    color: #333333;
+}

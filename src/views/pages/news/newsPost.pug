@@ -1,0 +1,83 @@
+extends ../../layout
+
+
+block link
+  link(rel="stylesheet", href="/css/pages/post/dang-tin-bds.css")
+
+block body
+  .container
+    if user
+      .link.font5
+        a(href="/") Trang chủ 
+        p > Đăng báo
+      form#formPost(action="/news/newsPost", method="post", enctype="multipart/form-data", name="formPost") 
+        .khung
+          .khungdang
+            .til
+              h1.font4(style="padding-top: 20px") Thông tin bài báo
+            .formdang
+              h4 Loại bài báo
+              .ngang
+                input(type="radio", name="loaibai", value="Báo" checked)
+                span Báo thường
+                input(type="radio", name="loaibai", value="Dự án")
+                span Dự án
+              select(name="loai") 
+                option(value="Tin nổi bật") Tin nổi bật
+                option(value="Tin tức") Tin tức
+                option(value="Tư vấn")  Tư vấn
+                option(value="Đang khởi công") Đang khởi công
+                option(value="Đang mở bán") Đang mở bán
+                option(value="Đã bàn giao") Đã bàn giao
+              h2.font4 Thông tin bài báo
+              .doc
+                .ngang(style="margin-top:20px;") 
+                  h4 Tiêu đề bài báo
+                  p.sao *
+                input(type="text", name="title", onkeyup="charTitle(this)", placeholder="VD: Bán nhà mặt đường 40m2 Huyện Gia Lâm ...", value="", required)
+              span#textTitle
+              .doc
+                .ngang
+                  h4 Nội dung bài báo
+                  p.sao * 
+                textarea#textarea(name="desc", onkeyup="charCount(this)" ,placeholder="Nhập nội dung về bài đăng của bạn. Ví dụ: Nhà có vị trí mặt đường, gần bệnh viện, gần chợ ... ", value="", required)
+              span#textCount
+              h2.font4 Hình Ảnh hoặc Video
+              .giuadoc
+                .oimg.bo  
+                  label.iimg.an(for="files")
+                    .iconup
+                    p(style="font-size: 16px;") Thêm hình ảnh hoặc video
+                  input(type="file", name="files", id="files", accept=".jpg,.jpeg,.png" hidden multiple) 
+              
+                label(for="submit").butt-sm.an Đăng báo
+        input(type="submit", name="submit", id="submit", hidden)
+      
+    //-  tự chuyển trang
+    else 
+      meta(http-equiv = "refresh" content = "0; url = /admin/login")
+block script 
+  script(src="https://code.jquery.com/jquery-3.2.1.min.js")
+  script(src="/js/imgshows.js")
+  script(src="/js/sort.select.js")
+  script(type="text/javascript").
+    // dem van ban
+    function charCount(textarea) {
+        max = 9999;
+        var length = textarea.value.length;
+        if (length > max) {
+            textarea.value = textarea.value.substring(0, max);
+        } else {
+            document.getElementById('textCount').innerHTML = length + '/' + max;
+        }
+    }
+
+    function charTitle(text) {
+        max = 199;
+        var length = text.value.length;
+        if (length > max) {
+            text.value = text.value.substring(0, max);
+        } else {
+            document.getElementById('textTitle').innerHTML = length + '/' + max;
+        }
+    }

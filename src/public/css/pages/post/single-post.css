@@ -1,0 +1,193 @@
+.khungdang {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.userpost {
+    width: 30%;
+    padding: 20px 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(250, 250, 250);
+    max-height: 380px;
+}
+
+.avtpost {
+    margin: 5% 0;
+}
+
+.avtpost img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.callpost {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+.addrpost,
+.emailpost,
+.phonepost {
+    padding: 15px 35px;
+    margin: 5px;
+}
+
+.phonepost {
+    font-size: 18px;
+    background-color: rgb(112, 240, 155);
+}
+
+.phonepost:hover {
+    background-color: rgb(83, 235, 83);
+    margin: 2px;
+    padding: 18px 38px;
+}
+
+.emailpost {
+    background-color: rgb(247, 162, 162);
+}
+
+.emailpost:hover {
+    background-color: rgb(235, 83, 83);
+    margin: 2px;
+    padding: 18px 38px;
+}
+
+.addrpost {
+    text-align: center;
+    background-color: rgb(235, 235, 235);
+}
+
+.addrpost:hover {
+    background-color: rgb(203, 203, 203);
+    margin: 2px;
+    padding: 18px 38px;
+}
+
+.mainpost {
+    width: 65%;
+    height: auto;
+    background-color: rgb(250, 250, 250);
+}
+
+.imgposts {
+    width: 94%;
+    margin: 30px;
+}
+
+.imgbig {
+    width: 98%;
+    height: 350px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    filter: blur(5px);
+}
+
+.imgbig img {
+    object-fit: contain;
+}
+
+.imgsmall {
+    width: auto;
+    max-width: 98%;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.imgs {
+    width: 100%;
+    height: 110px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.thumbnail{
+	object-fit: cover;
+	cursor: pointer;
+    opacity: 0.4;
+	margin: 5px;
+	border: 2px solid black;
+}
+
+.thumbnail:hover{
+	opacity: 1;
+}
+
+.actives {
+	opacity: 1;
+}
+
+.leng {
+    position: absolute; 
+    right: 10px; 
+    bottom: 10px;
+    padding: 6px;
+    background-color: black;
+    color: white;
+}
+
+.nuttron{
+    color: #999999;
+    padding: 10px;
+    border-radius: 50%;
+    transition: 0.3s;
+    background-color: #333333;
+}
+
+.nuttron:hover {
+    padding: 12px;
+    margin: -2px;
+    color: white;
+    background-color: black;
+}
+
+
+
+.decspost {
+    width: 92%;
+    height: auto;
+    margin: 0 30px;
+    padding-bottom: 30px;
+}
+
+.decspost h2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    max-height: 44px;
+    max-width: 94%;
+}
+
+.phaivt {
+    padding: 15px 30px;
+}
+
+.delete {
+    color: rgb(187, 0, 0);
+}
+
+.delete:hover {
+    color: #ff0000;
+}
+
+.ngang {
+    margin: 10px 0;
+}

@@ -1,0 +1,17 @@
+.tt {
+    padding: 30px 15px;
+    height: 120px;
+    background-color: rgb(255, 255, 255);
+}
+
+.tt h3 {
+    padding-bottom: 20px;
+}
+
+.tt label {
+    margin-left: 5px;
+}
+
+.tt input {
+    margin: 10px 0;
+}

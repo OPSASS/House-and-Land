@@ -1,0 +1,75 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/auth/login.css")
+block body
+  .container
+    .loginform
+      .loginimg
+        .loginof
+            p Hoặc bằng
+            #mxh 
+              a(href="/auth/facebook").hovf.bx.bxl-facebook-circle.bx-md
+              a(href="/404").hovt.bx.bxl-twitter.bx-md
+              a(href="/auth/google").hovg.bx.bxl-google.bx-md
+            .ask
+              p Bạn chưa có tài khoản?
+              a.bntadd(href="/auth/register") Đăng ký
+      form(action="/auth/login", method="POST" )#dangnhap.bo.bong
+        .form-group
+          .formitem
+            h1 Đăng nhập
+            input.odn#username(type="text" name="username" required placeholder="Tên đăng nhập")
+            input.odn#password(type="password" name="password" required minlength="8" placeholder="Mật khẩu")
+            .reme
+              .giuangang
+                input.checkbox(type="checkbox", name="remember" id="remember" onclick="setCookie()") 
+                label(for="remember" style="margin-left: 5px;") Nhớ mật khẩu
+              a(href="/auth/reset") Quên mật khẩu?
+          input.bntsm(type="submit" value="Đăng nhập")
+
+block script 
+  script(type="text/javascript").
+    // remember me
+    function setCookie() {
+      var u = document.getElementById("username").value;
+      var p = document.getElementById('password').value;
+      document.cookie = "username=" + u + ";";
+      document.cookie = "password=" + p + ";";
+    }
+
+    function getCookiedata() {
+      var username = getCookie("username");
+      var password = getCookie("password");
+
+      if (username != "" && password != "") {
+        document.getElementById('username').value = username;
+        document.getElementById('password').value = password;
+        document.getElementById('remember').checked = true;      
+      }
+
+      else {
+        document.getElementById('username').value = "";
+        document.getElementById('password').value = "";
+        document.getElementById('remember').checked = false;
+      }
+    }  
+    
+    function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    getCookiedata();
+
+
+

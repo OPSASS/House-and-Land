@@ -1,0 +1,36 @@
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{title} | HOUSE AND LANDS
+    link(rel='stylesheet' href='/css/admin/layout-ad.css')
+    link(rel="icon" href="/img/logo.ico")
+    link(href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='/css/sweetalert2.min.css')
+  body 
+    .giuadoc
+      img(src="https://cdni.iconscout.com/illustration/premium/thumb/female-teacher-holding-stop-sign-5055175-4223166.png", alt="" style="padding-top: 20px")
+      h2(style="padding:0 0 20px 0") BẠN KHÔNG CÓ QUYỀN TRUY CẬP VÀO TRANG WEB NÀY
+      a(href="/").nut.bo Trở về trang chủ
+      p(style="padding:20px") hoặc đợi sau 
+      h1(style="font-size: 50px")#sec 0
+      meta(http-equiv = "refresh" content = "30; url = /admin/login") 
+  script(type="text/javascript").
+    var countdown = new Date(31000).getTime();
+    var now2 = new Date().getTime();
+    var news = countdown + now2;
+    var x = setInterval(() => {
+      var now = new Date().getTime();
+      var dis = news - now;
+
+      var sec = Math.floor((dis % (1000 * 60)) / (1000));
+
+      document.getElementById("sec").innerHTML = sec; 
+      if(dis == 0) {
+        stop();
+      }
+    })
+    function stop() {
+      clearInterval(x);
+    }

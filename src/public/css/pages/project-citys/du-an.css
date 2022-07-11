@@ -1,0 +1,106 @@
+
+.anhlon 
+{
+  background-image: url('/img/Du_an/aq1.jpg');
+  width: 100%;
+  height: 600px;
+  background-size: cover;
+  margin-top: 30px;
+}
+.ov1
+{
+  width: 550px;
+  height: 600px;
+}
+.ov2
+{
+  width: 550px;
+  height: 85px;
+}
+.fontc
+{
+  font-size: 100px;
+  color: #f6f1f1;
+  font-weight: bold;
+  padding-top: 100px;
+}
+.ov3
+{
+  width: 550px;
+  height: 100px;
+  padding-top: 25px;
+}
+.font1
+{
+  font-size: 34px;
+  color: #f6f1f1;
+  text-shadow: #111111 0px 0px 5px;
+}
+.ov4
+{
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+}
+.ov5
+{
+  width: 40%;
+  height: auto;
+  padding: 20px;
+}
+.anhnho1
+{
+  background-image: url('/img/Du_an/aq5.jpg');
+  width: 50%;
+  height: 600px;
+  background-size: cover;
+}
+.fontd
+{
+  font-size:40px;
+  font-weight: bold;
+  color: #111010;
+  padding-top: 50px;
+}
+.fonte
+{
+  margin-top: 20px;
+  font-size: 20px;
+}
+.ov6
+{
+  width:100%;
+  height:50px;
+  padding: 20px;
+  font-size:32px;
+  font-weight: bold;
+  color: #111010;
+  text-align: center;
+}
+.ov7
+{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+.anhnho2 
+{
+  background-image: url('/img/Du_an/aq6.jpg');
+  width: 30%;
+  height: 500px;
+  background-size: cover;
+}
+.anhnho3 
+{
+  background-image: url('/img/Du_an/aq3.jpg');
+  width: 30%;
+  height: 500px;
+  background-size: cover;
+}
+.anhnho4
+{
+  background-image: url('/img/Du_an/aq7.jpg');
+  width: 30%;
+  height: 500px;
+  background-size: cover;
+}

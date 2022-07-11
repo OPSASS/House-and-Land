@@ -1,0 +1,136 @@
+extends ../layout-ad
+
+block link
+  link(rel="stylesheet", href="/css/admin/service/service.css")
+  
+block li1
+  li
+    a(href='/admin')
+      i.bx.bx-home-alt-2
+      span.links_name Trang quản trị
+    span.tooltip Trang quản trị
+block li2
+  li
+    a(href='/admin/users')
+      i.bx.bx-user
+      span.links_name Người dùng
+    span.tooltip Quản lý người dùng
+block li3
+  li
+    a(href='/admin/posts')
+      i.bx.bx-book-content
+      span.links_name Bài đăng
+    span.tooltip Quản lý bài viết
+//- block li4
+//-   li
+//-     a(href='/admin/chat')
+//-       i.bx.bx-chat
+//-       span.links_name Tin nhắn
+//-     span.tooltip Tin nhắn
+  
+block li5
+  li
+    a(href='/admin/chart')
+      i.bx.bx-pie-chart-alt-2
+      span.links_name Biểu đồ thống kê
+    span.tooltip Biểu đồ thống kê
+block li6
+  li
+    a(href='/admin/feedback')
+      i.bx.bxs-envelope
+      span.links_name Phản hồi
+    span.tooltip Phản hồi
+block li7
+  li
+    a(href='/admin/service').choose
+      i.bx.bx-cart-alt
+      span.links_name(style="color: #222222;") Gói dịch vụ
+    span.tooltip Gói dịch vụ
+
+block body
+  .container
+    h1.title Gói dịch vụ
+    .add-service
+      form(action="/admin/service/add", method="POST")
+        h3 Thêm gói dịch vụ
+        h4 Loại gói dịch vụ
+        .infor-service
+          input#basic(type="radio", name="svType", value="basic", checked="checked")
+          label(for="basic").an Gói cơ bản
+          input#advance(type="radio", name="svType", value="advance")
+          label(for="advance").an Gói Thường
+          input#vip(type="radio", name="svType", value="vip")
+          label(for="vip").an Gói VIP
+        h4 Thông tin gói
+        .form-service
+          .o4xn
+            input.oservice(type="text", name="svName", placeholder="Tên gói dịch vụ")
+            input.oservice(type="text", name="svPrice", placeholder="Giá gói dịch vụ")
+            input.oservice(type="text", name="svNum", placeholder="Số lượng tin đăng")
+            input.oservice(type="text", name="svTime", placeholder="Thời gian xuất hiện mỗi tin")
+          textarea(name="svDesc", placeholder="Mô tả gói dịch vụ (nếu có)")
+        input.butt-sm.an(type="submit", value="Thêm gói dịch vụ")
+    .list-service
+      h3 Danh sách gói dịch vụ
+      if services.length > 0
+        .o3x2
+          each service in services.slice(0, 6)
+            .sv-list
+              .sv-item.bong
+                .edit.giuadoc
+                  form#delete(action="/admin/service/"+ service.id +"?_method=DELETE", method="POST" hidden)
+                  label(for="delete" onclick="ConfirmDialog()").bx.bx-trash.an.deleteh
+                  a(href="/admin/service/"+ service.id + "/edit").bx.bx-edit.an.edith
+                if service.svType == 'advance'
+                  .sv-ad.sv-name
+                    p.f24= service.svName
+                  .sv-colu
+                    .money
+                      .f30.sv-price-text= service.svPrice.toLocaleString('it-IT') 
+                      p(style="font-size:20px")  đ
+                else if service.svType == 'vip'
+                  .sv-vp.sv-name
+                    p.f24= service.svName
+                  .sv-colu
+                    .money
+                      .f30.sv-price-text= service.svPrice.toLocaleString('it-IT') 
+                      p(style="font-size:20px")  đ
+                else 
+                  .sv-bs.sv-name
+                    p.f24= service.svName
+                  .sv-colu
+                    .money
+                      .f30.sv-price-text= service.svPrice.toLocaleString('it-IT') 
+                      p(style="font-size:20px")  đ
+                .sv-info 
+                  p Được đăng tối đa #{service.svNum} tin
+                  p Thời hạn tin đăng #{service.svTime} ngày
+                  .sv-desc-text= service.svDesc
+        br
+        br
+        br 
+      else
+        p(style="margin-top:10px") Bạn chưa có gói dịch vụ nào
+        
+block script
+  script(type="text/javascript").
+    function ConfirmDialog(){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+           document.getElementById("delete").submit();
+        }
+      })
+    }

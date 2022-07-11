@@ -1,0 +1,382 @@
+.link {
+    margin: 50px 0;
+}
+
+label {
+    cursor: pointer;
+}
+
+label p {
+    margin-left: 10px;
+}
+.mainuser {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-info {
+    width: 78%;
+    height: auto;
+}
+
+.content-if {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-setting {
+    width: 20%;
+    height: auto;
+    background-color: #333333;  
+    color: #999999;
+}
+
+.iput {
+    display: none;
+    
+}
+
+.iput, .opass{
+    width: 100%;
+    height: 30px;
+    padding-left: 10px;
+    margin-top: -5px;
+    font-size: 15px; 
+}
+
+.iput2 {
+    width: auto;
+    padding-left: 10px;
+    margin-top: -5px;
+    font-size: 15px;
+    width: 229px;
+    height: 30px;
+    display: none;  
+    margin-right: 10px;
+}
+
+.usif {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-size: cover;
+    margin-right: 10px;
+}
+
+.user-avatar:hover{
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+    margin: -3px 8px -2px -3px;
+}
+
+.butt{
+    top: 350px;
+    padding: 10px 20px ;
+    left: 55.5%;
+    background-color: #333333;
+    color: #999999;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+}
+
+.butt:hover{
+    background-color: #999999;
+    color: #333333;
+    padding: 12px 22px;
+    margin: -2px;
+}
+
+
+
+.giuangang{
+    padding: 5px;
+    border-radius: 5px;
+    color: #999999;
+}
+
+.giuangang:hover {
+    background-color: #999999;
+    color: white;
+}
+
+.user-setting-form, .user-auth {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    margin: 20px auto;
+}
+
+.user-setting-form button, .user-auth button {
+    display: none;
+}
+
+.user-auth {
+    width: 80%;
+    position: absolute;
+    border-top: 2px solid #99999946;
+    bottom: 0;
+    left: 20px;
+}
+
+.user-info-content, .postupload {
+    display: grid;
+    grid-template-columns: 31% 31% 32%;
+    grid-gap: 30px 30px;
+    min-height: 400px;
+    
+}
+
+.saok a{
+    margin-left: 10px;
+    font-weight: bolder;
+    color: red;
+}
+
+.saok a:hover {
+    color: rgba(255, 0, 0, 0.659);
+}
+
+.userform {
+    width: 100%;
+    height: 100px;
+    background: white;
+}
+
+.user-items {
+    width: 90%;
+    height: auto;
+    margin: 20px auto;
+}
+.user-items-select {
+    width: 100%;
+    height: auto;
+    margin: 20px;
+}
+
+.user-items-select h3{
+    margin-bottom: 20px;
+}
+
+
+.dx *{
+    color: #999999;
+}
+.dx i:hover, .dx p:hover {
+    color: white;
+}
+
+.userit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5%;
+}
+
+.oip {
+    margin-top: -5px;
+    width: 250px;
+    font-size: 15px;
+    height: 30px;
+}
+
+.opost {
+    width: 300px;
+    height: 450px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0px 1px 15px 1px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.opost:hover {
+    margin: -10px;
+    width: 320px;
+    height: 470px;
+    box-shadow: 0px 1px 15px 1px rgba(0, 0, 0, 0.4);
+}
+
+.oimg {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background-color: #000000;
+    border-radius: 10px 10px 0 0;
+}
+
+.khungtit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+}
+
+.khungtit h3 {
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    max-height: 33px;
+    height: 33px;  
+}
+.imgpost {
+    position: relative;
+}
+
+.imgpost::after {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    left: 0px;
+    bottom: 0px;
+    background: linear-gradient(180deg, rgba(44,44,44,0) 0%, rgba(44,44,44,0.9) 100%);
+    content: '';
+    z-index: 1;
+}
+
+.oimg {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background-color: #000000;
+    border-radius: 10px 10px 0 0;
+}
+.img-length {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    bottom: 8px;
+    right: 8px;
+    z-index: 2;
+}
+
+
+.img-length * {
+    color: white;
+}
+
+.form-delete {
+    width: 100%;
+    height: auto;
+}
+
+.form-delete * {
+    margin-bottom: 20px;
+}
+
+.odelete {
+    width: 600px;
+    padding: 10px;
+}
+
+
+/* select custom */
+.select-box {
+    position: relative;
+    display: block;
+    width: 99%;
+    height: 28px;
+    font-size: 15px;
+    margin-left: -10px;
+    color: black;
+    border: 1px solid #2d2d2d;
+}
+.select-box__current {
+    position: relative;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    outline: none;
+}
+.select-box__current:focus + .select-box__list {
+    opacity: 1;
+    animation-name: none;
+    
+}
+
+.select-box__current:focus + .select-box__list .select-box__option {
+    cursor: pointer;
+}
+.select-box__current:focus .select-box__icon {
+    transform: translateY(-50%) rotate(180deg);
+}
+.select-box__icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    opacity: 0.3;
+    transition: 0.2s ease;
+}
+.select-box__value {
+    display: flex;
+}
+.select-box__input {
+    display: none;
+}
+.select-box__input:checked + .select-box__input-text {
+    display: block;
+}
+.select-box__input-text {
+    display: none;
+    width: auto;
+    margin: 0;
+    padding: 5px 10px;
+
+}
+.select-box__list {
+    position: absolute;
+    width: 100%;
+    padding: 0;
+    margin-top: 5px;
+    list-style: none;
+    opacity: 0;
+    animation-name: HideList;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: step-start;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+    
+}
+.select-box__option {
+    display: block;
+    width: 255px;
+    padding: 10px;
+    background-color: #fff;
+    z-index: 1;
+}
+.select-box__option:hover, .select-box__option:focus {
+    color: black;
+    background-color: #e3e3e3;
+}
+
+#noi3 {
+    grid-column-start: 1; 
+    grid-column-end: 3;
+}
+.tnha {
+    height: auto;
+    width: 150px;
+    margin: 4px 25px;
+}
+
+
+@keyframes HideList {
+    from {
+        transform: scaleY(1);
+   }
+    to {
+        transform: scaleY(0);
+   }
+}

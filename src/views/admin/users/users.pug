@@ -1,0 +1,132 @@
+extends ../layout-ad
+
+block link
+  link(rel="stylesheet", href="/css/admin/users/users.css")
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css')
+
+block li1
+  li
+    a(href='/admin')
+      i.bx.bx-home-alt-2
+      span.links_name Trang quản trị
+    span.tooltip Trang quản trị
+block li2
+  li
+    a(href='/admin/users').choose
+      i.bx.bx-user
+      span.links_name(style="color: #222222;") Người dùng
+    span.tooltip Quản lý người dùng
+block li3
+  li
+    a(href='/admin/posts')
+      i.bx.bx-book-content
+      span.links_name Bài đăng
+    span.tooltip Quản lý bài viết
+//- block li4
+//-   li
+//-     a(href='/admin/chat')
+//-       i.bx.bx-chat
+//-       span.links_name Tin nhắn
+//-     span.tooltip Tin nhắn
+  
+block li5
+  li
+    a(href='/admin/chart')
+      i.bx.bx-pie-chart-alt-2
+      span.links_name Biểu đồ thống kê
+    span.tooltip Biểu đồ thống kê
+block li6
+  li
+    a(href='/admin/feedback')
+      i.bx.bxs-envelope
+      span.links_name Phản hồi
+    span.tooltip Phản hồi
+block li7
+  li
+    a(href='/admin/service')
+      i.bx.bx-cart-alt
+      span.links_name Gói dịch vụ
+    span.tooltip Gói dịch vụ
+
+block body
+  .container
+    h1.title Tất cả người dùng
+    .all-user
+      .new-users.bo.bong
+        h3 Người dùng mới
+        .users-new-table
+          table.hee
+            if newus.length == 0
+              p Hiện chưa có người dùng mới nào!
+            else
+            each user in newus
+              tr
+                td(style="width: 60%;")
+                  .user-name.giuangang
+                    if user.profilePicture
+                      img(src=user.profilePicture).user-avt
+                    else
+                      img(src="/img/no-avt.png").user-avt
+                    span= user.username
+
+                td
+                  .user-info-detail.giuadoc
+                    a(href="/admin/users").giuangang
+                      .bx.bx-info-circle.bx-sm
+                      span Xem thêm
+              
+      .users.bo.bong
+        h3 Tất cả người dùng
+        table.users-table
+          tr 
+            th Người dùng
+            th Ngày tạo tài khoản
+            th Gói dịch vụ
+            th Đối tượng
+            th Hành động
+          each user in users
+            tr
+              td
+                a(href="/admin/posts/"+user.id)
+                  .user-name.giuangang
+                    if user.profilePicture
+                      img(src=user.profilePicture).user-avt
+                    else
+                      img(src="/img/no-avt.png").user-avt
+                    span= user.username
+              td= new Date(user.createdAt).toLocaleDateString()
+              td= user.postType
+              td 
+                if user.isAdmin == true
+                  p Admin 
+                else 
+                  p Khách hàng
+              td
+                form#delete(action="/admin/users/"+ user._id +"?_method=DELETE", method="POST")
+                  .user-action
+                    label(for="delete" onclick="ConfirmDialog()" style="color: red").bx.bx-trash.bx-sm.an
+
+block script
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js')
+  script(type="text/javascript").
+    function ConfirmDialog(){
+      swal({   title: "Xóa Tài khoản?",   
+        text: "Bạn chắc chắn muốn xóa tài khoản này?",   
+        type: "warning",   
+        showCancelButton: true,   
+        confirmButtonColor: "#DD6B55",   
+        confirmButtonText: "Tiếp tục xóa!",   
+        cancelButtonText: "Quay lại!",   
+        closeOnConfirm: false,   
+        closeOnCancel: false }, 
+    function(isConfirm){   
+      if (isConfirm) 
+        {   
+          swal("Đã xóa thành công!", "Tài khoản này đã được xóa.", "success");   
+          document.getElementById("delete").submit();
+        } 
+        else {     
+          swal("Hủy", "Tài khoản đã được dữ lại!", "error");   
+          } 
+        });
+      }

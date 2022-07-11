@@ -1,0 +1,222 @@
+extends ../layout-ad
+
+block link
+  link(rel="stylesheet", href="/css/admin/posts/posts.css")
+  link(rel="stylesheet", href="/css/pages/search/search.css")
+
+block li1
+  li
+    a(href='/admin')
+      i.bx.bx-home-alt-2
+      span.links_name Trang quản trị
+    span.tooltip Trang quản trị
+block li2
+  li
+    a(href='/admin/users')
+      i.bx.bx-user
+      span.links_name Người dùng
+    span.tooltip Quản lý người dùng  
+block li3
+  if acceptPosts.length > 0
+    .tb.notification= acceptPosts.length
+  li
+    a(href='/admin/posts').choose
+      i.bx.bx-book-content
+      span.links_name(style="color: #222222;") Bài đăng
+    span.tooltip Quản lý bài viết
+
+//- block li4
+//-   li
+//-     a(href='/admin/chat')
+//-       i.bx.bx-chat
+//-       span.links_name Tin nhắn
+//-     span.tooltip Tin nhắn
+  
+block li5
+  li
+    a(href='/admin/chart')
+      i.bx.bx-pie-chart-alt-2
+      span.links_name Biểu đồ thống kê
+    span.tooltip Biểu đồ thống kê
+block li6
+  li
+    a(href='/admin/feedback')
+      i.bx.bxs-envelope
+      span.links_name Phản hồi
+    span.tooltip Phản hồi
+block li7
+  li
+    a(href='/admin/service')
+      i.bx.bx-cart-alt
+      span.links_name Gói dịch vụ
+    span.tooltip Gói dịch vụ
+
+
+block body
+  .container
+    .link.font5
+      h1.title Bài viết cần phê duyệt
+      if acceptPosts.length > 0
+        .khungpost
+          each post in acceptPosts.slice(0, 18)
+            a(href="/admin/posts/view/"+post.id).opost
+              if post.service === "vip"
+                if post.need === "Bán"
+                  .ribbon
+                  .vip-title CẦN BÁN GẤP
+                else if post.need === "Cho thuê"
+                  .ribbon
+                  .vip-title CHO THUÊ GẤP 
+                else 
+                  .ribbon
+                  .vip-title NHƯỢNG GẤP
+              each upload in uploads
+                if upload.postId === post.id
+                  if upload.files[0]
+                    .imgpost
+                      img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                      .img-length
+                        .giuangang
+                          span.bx.bx-time(style="margin-right: 3px;")
+                          span= moment(post.createdAt).locale('vi').fromNow()
+                        div
+                          span(style="margin-right: 3px;")= upload.files.length
+                          span.bx.bx-images
+                  else
+                    .imgpost
+                      img.oimg(src="/img/no-image.png")
+                      .img-length
+                        .ngang
+                          i.bx.bx-time(style="margin-right: 3px;")
+                          p= moment(post.createdAt).locale('vi').fromNow()
+              .khungtit
+                h3.haidong= post.title
+                .ngang
+                  .giuangang
+                    i.bx.bx-money-withdraw
+                    if post.currency === "VNĐ"
+                      if post.money / 1000000000 < 1 
+                        b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                      else 
+                        -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                          b#money_fix(style="padding: 0 5px")= ty
+                    else
+                      p &nbsp
+                      b(style="font-size: 14px")= post.currency
+                .ngang
+                  .giuangang
+                    i.bx.bx-area
+                    b(style="padding: 0 5px")= post.area
+                    p m²
+                  .ttnha(style="display: flex")
+                    if post.so_tang == 0
+                    else
+                      .ngang 
+                        i.bx.bx-layer-plus
+                        b(style="padding: 0 20px 0 5px")= post.so_tang
+                    if post.so_phong_ngu == 0
+                    else
+                      .ngang 
+                        i.bx.bx-bed
+                        b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                    if post.so_phong_tam == 0
+                    else
+                      .ngang 
+                        i.bx.bx-bath
+                        b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                
+                .ngang
+                  i.bx.bx-map-pin
+                  p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                if post.way 
+                  .ngang
+                    i.bx.bx-purchase-tag-alt
+                    p.haidong(style="padding: 0 5px")= post.way
+                .ngang
+                  i.bx.bxs-hand-right
+                  b(style="padding: 0 5px")= post.need
+      else 
+        p Hiện chưa có bài viết nào cần phê duyệt.
+    .title
+    h2.title Bài viết đã phê duyệt
+    if posts.length > 0
+      .khungpost
+        each post in posts.slice(0, 18)
+          a(href="/mua-ban-bds/"+post.slug).opost
+            if post.service === "vip"
+              if post.need === "Bán"
+                .ribbon
+                .vip-title CẦN BÁN GẤP
+              else if post.need === "Cho thuê"
+                .ribbon
+                .vip-title CHO THUÊ GẤP 
+              else 
+                .ribbon
+                .vip-title NHƯỢNG GẤP
+            each upload in uploads
+              if upload.postId === post.postId
+                if upload.files[0]
+                  .imgpost
+                    img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                    .img-length
+                      .giuangang
+                        span.bx.bx-time(style="margin-right: 3px;")
+                        span= moment(post.createdAt).locale('vi').fromNow()
+                      div
+                        span(style="margin-right: 3px;")= upload.files.length
+                        span.bx.bx-images
+                else
+                  .imgpost
+                    img.oimg(src="/img/no-image.png")
+                    .img-length
+                      .ngang
+                        i.bx.bx-time(style="margin-right: 3px;")
+                        p= moment(post.createdAt).locale('vi').fromNow()
+            .khungtit
+              h3.haidong= post.title
+              .ngang
+                .giuangang
+                  i.bx.bx-money-withdraw
+                  if post.currency === "VNĐ"
+                    if post.money / 1000000000 < 1 
+                      b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                    else 
+                      -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                        b#money_fix(style="padding: 0 5px")= ty
+                  else
+                    p &nbsp
+                    b(style="font-size: 14px")= post.currency
+              .ngang
+                .giuangang
+                  i.bx.bx-area
+                  b(style="padding: 0 5px")= post.area
+                  p m²
+                .ttnha(style="display: flex")
+                  if post.so_tang == 0
+                  else
+                    .ngang 
+                      i.bx.bx-layer-plus
+                      b(style="padding: 0 20px 0 5px")= post.so_tang
+                  if post.so_phong_ngu == 0
+                  else
+                    .ngang 
+                      i.bx.bx-bed
+                      b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                  if post.so_phong_tam == 0
+                  else
+                    .ngang 
+                      i.bx.bx-bath
+                      b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+              
+              .ngang
+                i.bx.bx-map-pin
+                p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+              if post.way 
+                .ngang
+                  i.bx.bx-purchase-tag-alt
+                  p.haidong(style="padding: 0 5px")= post.way
+              .ngang
+                i.bx.bxs-hand-right
+                b(style="padding: 0 5px")= post.need
+    else 
+      p Hiện chưa có bài viết nào.

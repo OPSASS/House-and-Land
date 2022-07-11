@@ -1,0 +1,183 @@
+extends ../../layout
+
+
+block link
+  link(rel="stylesheet", href="/css/pages/post/dang-tin-bds.css")
+  link(rel="stylesheet", href="/css/pages/post/edit-tin.css")
+block body
+  .container
+    if user
+      .link.font5
+        a(href="/") Trang chủ 
+        p > Sửa tin 
+      div
+        form(action="/posts/" + post.id + "?_method=PUT", method="post") 
+          .khung
+            .khungdang
+              .til
+                h1.font4(style="padding-top: 20px") Thông tin cơ bản
+                div                
+                  span Thông tin có dấu
+                  span.sao (*)
+                  span là bắt buộc
+              .formdang
+                  div
+                    h2.font4 Thông tin bài đăng
+                    .doc
+                      .ngang(style="margin-top:20px;") 
+                        h4 Tiêu đề bài đăng
+                        p.sao *
+                      input(type="text", name="title", onkeyup="charTitle(this)", placeholder="VD: Bán nhà mặt đường 40m2 Huyện Gia Lâm ...", value=post.title, required)
+                    span#textTitle
+                    .doc
+                      .ngang
+                        h4 Nội dung bài đăng
+                        p.sao * 
+                      textarea#textarea(name="desc", onkeyup="charCount(this)" ,placeholder="Nhập nội dung về bài đăng của bạn. Ví dụ: Nhà có vị trí mặt đường, gần bệnh viện, gần chợ ... " value="" required)= post.desc
+                    span#textCount
+                    div
+                      h2.font4 Thông tin bất động sản 
+                        //- .ngang
+                        //-   h4 Loại hình bất động sản
+                        //-   p.sao *
+                        //- .loaihinh
+                        //-   #ban.tabcontent
+                        //-     select#ban-s(name="loai", required)
+                        //-       option(value='' disabled selected style="text-align: center;") --Chọn loại bất động sản--
+                        //-       option(value='Bán đất thổ cư') Bán đất thổ cư
+                        //-       option(value='Bán đất nền dự án') Bán đất nền dự án
+                        //-       option(value='Bán đất nông nghiệp') Bán đất nông nghiệp
+                        //-       option(value='Bán nhà riêng') Bán nhà riêng
+                        //-       option(value='Bán nhà mặt phố') Bán nhà mặt phố
+                        //-       option(value='Bán căn hộ chung cư') Bán căn hộ chung cư
+                        //-       option(value='Bán biệt thự') Bán biệt thự
+                        //-       option(value='Khác') Khác 
+                      #tt-them
+                        .chon 
+                          h4 Giấy tờ pháp lý
+                          label(for="so-do") Sổ đỏ/Sổ hồng
+                          label(for="hop-dong") Hợp đồng mua bán
+                          label(for="chuyen-nhuong") Giấy chuyển nhượng/Sang tên
+                          label(for="giay_to-khac") +
+                        .o3x1
+                          .t50
+                            h4 Số phòng ngủ
+                            .number-input
+                              p.an(onclick="this.parentNode.querySelector('input[type=number]').stepDown()") -
+                              input.quantity(min="0" value="0" type="number" name="so-phong-ngu" placeholder="0")
+                              p.an.plus(onclick="this.parentNode.querySelector('input[type=number]').stepUp()") +
+                          .t50
+                            h4 Số phòng tắm
+                            .number-input
+                              p.an(onclick="this.parentNode.querySelector('input[type=number]').stepDown()") -
+                              input.quantity(min="0" value="0" type="number" name="so-phong-tam" placeholder="0")
+                              p.an.plus(onclick="this.parentNode.querySelector('input[type=number]').stepUp()") +
+                          .t50
+                            h4 Số tầng
+                            .number-input
+                              p.an(onclick="this.parentNode.querySelector('input[type=number]').stepDown()") -
+                              input.quantity(min="0" value="0" type="number" name="so-tang" placeholder="0")
+                              p.an.plus(onclick="this.parentNode.querySelector('input[type=number]').stepUp()") +
+                        h4 Nội thất
+                        if post.noi-that
+                          input(type="text", name="noi-that", placeholder="VD: Nội thất đầy đủ, Không có nội thất..." style="width:64%;" value=post.noi-that)
+                        else 
+                          input(type="text", name="noi-that", placeholder="VD: Nội thất đầy đủ, Không có nội thất..." style="width:64%;" value="")
+                
+                      .ngangnhieu(style="margin-top:20px;") 
+                        .doc
+                          .ngang
+                            h4 Địa chỉ bất động sản
+                            p.sao *
+                          .ngang
+                            select#city(name="city" )
+                              option(value='' disabled selected style="text-alile") Chọn tỉnh thành
+                            select#district(name="district" )
+                              option(value='' disabled selected) Chọn quận huyện
+                            select#ward(name="ward" )
+                              option(value='' disabled selected) Chọn phường xã
+                            input(type="text" name="street", placeholder="Nhập địa chỉ cụ thể: Số nhà/Tên đường/Ngách..." , required style="width: 315px;" value=post.street)
+                      .doc
+                        h4 Đường vào
+                        if post.way
+                          input(type="text", name="way", placeholder="VD: Cách mặt đường đi vào 100m", value=post.way)
+                        else
+                          input(type="text", name="way", placeholder="VD: Cách mặt đường đi vào 100m", value="")
+                      .o3x1-custom 
+                        .doc
+                          .ngang
+                            h4 Diện tích
+                            p.sao *
+                          input(type="text", name="area", placeholder="40", required value=post.area)
+                          p.tipe m²
+                        .doc
+                          .ngang
+                            h4 Mức giá
+                            p.sao *
+                          input(type="text", name="money", onkeyup="currency(this)", placeholder="1.600.000.000", value=post.money)
+                            
+                        .doc
+                          .ngang
+                            h4 Đơn vị
+                            p.sao *
+                          mixin SelectBox(name, options)
+                            .select-box
+                              .select-box-current(tabindex="1")
+                                each option, index in options
+                                  .select-box-value
+                                    input.select-box-input(type="radio" id=index value=option.value name="currency" checked=option.checked)
+                                    p.select-box-input-text #{option.name}
+                                .select-box-icon.bx.bx-chevron-down
+                              ul.select-box-list
+                                each option, index in options
+                                  li
+                                    label.select-box-option(for=index aria-hidden) #{option.name}
+                                  
+                          +SelectBox('currency', [
+                            {name: 'Tỷ', value: 'Tỷ', checked: true}, 
+                            {name: 'Triệu', value: 'Triệu'},
+                            {name: 'Nghìn', value: 'Nghìn'},
+                            {name: 'Tỷ/m²', value: 'Tỷ/m²'},
+                            {name: 'Triệu/m²', value: 'Triệu/m²'},
+                            {name: 'Nghìn/m²', value: 'Nghìn/m²'}, 
+                            {name: 'Thỏa thuận', value: 'Thỏa thuận'},
+                          ])
+                      //- #thue.tabcontent
+                      //-   select#thue-s(name="loai", required)
+                      //-     option(value='' disabled selected style="text-align: center;") --Chọn loại bất động sản--
+                      //-     option(value='Cho thuê đất') Cho thuê đất
+                      //-     option(value='Cho thuê nhà riêng') Cho thuê nhà riêng
+                      //-     option(value='Cho thuê căn hộ chung cư') Cho thuê căn hộ chung cư
+                      //-     option(value='Cho thuê biệt thự') Cho thuê biệt thự
+                      //-     option(value='Cho thuê nhà mặt phố') Cho thuê nhà mặt phố
+                      //-     option(value='Khác') Khác
+                      //- #nhuong.tabcontent
+                      //-   select#nhuong-s(name="loai", required)
+                      //-     option(value='' disabled selected style="text-align: center;") --Chọn loại bất động sản--
+                      //-     option(value='Sang nhượng đất') Sang nhượng đất
+                      //-     option(value='Sang nhượng nhà riêng') Sang nhượng nhà riêng
+                      //-     option(value='Sang nhượng căn hộ chung cư') Sang nhượng căn hộ chung cư
+                      //-     option(value='Sang nhượng biệt thự') Sang nhượng biệt thự
+                      //-     option(value='Sang nhượng nhà mặt phố') Sang nhượng nhà mặt phố
+                      //-     option(value='Khác') Khác
+                    
+                      //- input.khac(type="text" name="loai-khac" placeholder="Nhập loại hình bất động sản khác")#khac
+                  label(for="submit").butt-sm.an Câp nhật
+            .tt.bo
+              h3 Trạng thái bài đăng
+              div
+                input#success(type="radio", name="status", value="successful")
+                label(for="success").an Đã giao dịch thành công
+              div
+                input#none(type="radio", name="status", value="waived")
+                label(for="none").an Không có nhu cầu giao dịch nữa
+      
+          input#submit(type="submit", value="Cập nhật" hidden)
+    //-  tự chuyển trang
+    else 
+      meta(http-equiv = "refresh" content = "0; url = /auth/login")
+block script 
+  script(src="/js/more.js")
+  script(src="https://code.jquery.com/jquery-3.2.1.min.js")
+  script(src="/js/sort.select.js")
+  script(src="/js/tab.js")

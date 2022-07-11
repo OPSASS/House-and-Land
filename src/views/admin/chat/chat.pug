@@ -1,0 +1,57 @@
+extends ../layout-ad
+
+block link
+  link(rel="stylesheet", href="/css/admin/chat/chat.css")
+  link(rel="stylesheet", href="/css/pages/404/404.css")
+
+block li1
+  li
+    a(href='/admin')
+      i.bx.bx-home-alt-2
+      span.links_name Trang quản trị
+    span.tooltip Trang quản trị
+block li2
+  li
+    a(href='/admin/users')
+      i.bx.bx-user
+      span.links_name Người dùng
+    span.tooltip Quản lý người dùng
+block li3
+  li
+    a(href='/admin/posts')
+      i.bx.bx-book-content
+      span.links_name Bài đăng
+    span.tooltip Quản lý bài viết
+//- block li4
+//-   li
+//-     a(href='/admin/chat').choose
+//-       i.bx.bx-chat
+//-       span.links_name(style="color: #222222;") Tin nhắn
+//-     span.tooltip Tin nhắn
+  
+block li5
+  li
+    a(href='/admin/chart')
+      i.bx.bx-pie-chart-alt-2
+      span.links_name Biểu đồ thống kê
+    span.tooltip Biểu đồ thống kê
+block li6
+  li
+    a(href='/admin/feedback')
+      i.bx.bxs-envelope
+      span.links_name Phản hồi
+    span.tooltip Phản hồi
+block li7
+  li
+    a(href='/admin/service')
+      i.bx.bx-cart-alt
+      span.links_name Gói dịch vụ
+    span.tooltip Gói dịch vụ
+
+block body
+  .container
+    .main(style="margin-top: 0; padding: 100px;")
+      img(src='/img/fix.png' style="width: 250px; height: 260px;")
+      h1 Oops!
+      h2(style="margin-bottom: 50px;") Chúng tôi đang bảo trì chức năng này! 
+      a(href="/admin").nut.bo Trở về trang quản trị

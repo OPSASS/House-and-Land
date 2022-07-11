@@ -1,0 +1,94 @@
+.feedback {
+    height: 600px;
+    width: 55%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.form-fb {
+    width: 100%;
+    height: auto;
+    background-color: aliceblue;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.all-rq {
+    overflow-y: auto;
+    margin-top: 20px;
+    height: 92%;
+    background-color: #333333;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.gf {
+    display: grid;
+    grid-template-columns: 32% 67%;
+}
+
+img {
+    width: 40px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.user * {
+    padding: 5px;
+}
+
+.stars {
+    margin: 5px 0 -5px 5px;
+    color: orange;
+}
+
+.desc-fb {
+    display: grid;
+    grid-template-columns: 12% 88%;
+    padding: 10px 0;
+}
+
+.delete {
+    width: 43%;
+    height: 600px;
+    background-color: #999999;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.form-dl {
+    padding: 10px;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+label {
+    padding: 5px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+    transform: 0.3s;
+}
+
+.accept:hover {
+    color: white;
+    background-color: #00b300;
+}
+
+.close:hover {
+    color: white;
+    background-color: #ff0000;
+}
+
+.butt {
+    height: 36px;
+}

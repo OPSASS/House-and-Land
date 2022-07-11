@@ -1,0 +1,200 @@
+extends ../../layout
+
+block link
+    link(rel="stylesheet", href="/css/pages/post/single-post.css")
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css')
+block body 
+    if user
+        if posts
+            if user.isAdmin === true || posts.userId === user.id
+                .buttadd
+                    a(href="/posts/"+posts.id+"/edit" style="margin-top:50px;").edit.bx.bx-edit.bong
+                    form#delete(action="/posts/delete/"+posts.id+"?_method=DELETE", method="POST") 
+                        label(for="delete" onclick="ConfirmDialog()" style="margin-top:50px;").delete.bx.bx-trash.bong.an
+
+    .container
+        .link.font5
+            a(href="/") Trang chủ 
+            p >&nbsp
+            if (posts.need == "Bán")
+                a(href="/posts/tin-dang-ban")= posts.need
+            else if (posts.need == "Cho thuê")
+                a(href="/posts/tin-cho-thue")= posts.need
+            else 
+                a(href="/posts/tin-sang-nhuong")= posts.need
+            p &nbsp>&nbsp
+            p= posts.title
+        .khungdang
+            .userpost.bo.bong
+                .avtpost
+                    if posts.profilePicture
+                        img.user-avatar(src=posts.profilePicture)
+                    else
+                        img.user-avatar(src="/img/no-avt.png")
+                p Người đăng:
+                    h3= posts.name
+                .callpost
+                    p.phonepost.bo.an= "(+84)"+posts.phone
+                    if posts.email
+                        p.emailpost.bo.an= posts.email
+                    .addr 
+                        p.addrpost.bo.an= posts.address
+
+            .mainpost.bo.bong
+                if user
+                    if user.isAdmin === true || posts.userId === user.id
+                        .ngang(style="float: right; padding: 0 40px" )
+                            if new Date(posts.timepost).getTime() <= new Date().getTime()
+                                h3(style="padding: 0 5px") Tin đã hết hạn
+                                form#sf(action="/posts/"+posts.id+"/softDelete", method="post")
+                                    input(type="submit" value="SoftDelete")
+                            else
+                                h3(style="padding: 0 5px") Thời lượng tin còn
+                                h3= countdown(new Date(posts.timepost), null, countdown.DAYS | countdown.HOURS)
+                .imgposts
+                    each upload in uploads 
+                        if upload.files[0]
+                            .imgbig.bong.bo
+                                .ngang.leng.bo
+                                    p= upload.files.length
+                                    p &nbsp
+                                    .bx.bx-images
+                                if posts.status === "successful"
+                                    img.ksf(src="/img/ok.png", alt="alt")
+                                else if posts.status === "waived"
+                                    p Không cần
+                                img#featured.bo(src=url+"posts/"+upload.files[0].fileName)
+                        else
+                            img.imgbig.bo.bong(src="/img/no-image.png")
+                        if upload.files[1]
+                            #slide-wrapper
+                            //- .cantron
+                            //-     .ngangnhieu
+                            //-         .nuttron.an.bx.bx-chevron-left(onclick="leftslide()")
+                            //-         .nuttron.an.bx.bx-chevron-right(onclick="rightslide()")
+                            .imgsmall
+                                #slider.ngang
+                                    img.thumbnail.actives.imgs.bo.bong(src=url+"posts/"+upload.files[0].fileName)
+                                    each upload in uploads 
+                                        - for(i=1; i < upload.files.length; i++)
+                                            img.thumbnail.imgs.bo.bong(src=url+"posts/"+upload.files[i].fileName)
+                               
+                    
+                .decspost
+                    if posts.status === "successful"
+                        h3.sao
+                            i ĐÃ GIAO DỊCH THÀNH CÔNG!
+                    else if posts.status === "waived"
+                        h3.sao
+                            i NGƯỜI ĐĂNG KHÔNG CÒN GIAO DỊCH NỮA!
+                    h2= posts.title
+                    .ngang
+                        i.bx.bxs-map &nbsp
+                        p= posts.street + ", " + posts.ward + ", " + posts.district + ", " + posts.city
+                    br
+                    .khungtit
+                        .o3xn
+                            .ngang
+                                p Giá:&nbsp 
+                                    if posts.currency === "VNĐ"
+                                        if posts.money / 1000000000 < 1 
+                                            b(style="padding: 0 5px")= posts.money / 1000000 + " triệu"
+                                        else 
+                                            -const ty = posts.money / 1000000000 + " tỷ"
+                                                b= ty
+                                    else
+                                        p &nbsp
+                                        b(style="font-size: 16px")= posts.currency
+                            div(style="margin-top: 10px")
+                                span Diện tích:&nbsp
+                                b= posts.area + "m²"
+                            
+                            .ngang
+                                p Thời gian đăng:&nbsp
+                                b= moment(posts.createdAt).locale('vi').fromNow()
+                        br
+                        h3 Thông tin mô tả
+                        br
+                        p(style="width: 92%; white-space: pre-wrap;")= posts.desc
+                        br
+                        h3 Đặc điểm bất động sản
+                        div
+                            .ngang
+                                p Nhu cầu:&nbsp
+                                b= posts.need
+                                div(style="margin-left: 22%;")
+                                    span Loại bất động sản:&nbsp
+                                    b= posts.loai
+                        .o3xn
+                            if posts.way 
+                                .ngang
+                                    i.bx.bxs-arrow-from-left &nbsp
+                                    p Đường vào:
+                                    p(style="padding: 0 5px")= posts.way
+                            .ngang 
+                                if posts.giay_to
+                                    i.bx.bx-file-blank &nbsp
+                                    p Giấy tờ:&nbsp
+                                    b= posts.giay_to
+                            
+                        .o3xn
+                            if posts.so_phong_ngu == 0
+                            else
+                                .ngang
+                                    i.bx.bx-bed &nbsp
+                                    p Phòng ngủ:&nbsp
+                                    b= posts.so_phong_ngu
+                            if posts.so_phong_tam == 0
+                            else
+                                .ngang 
+                                    i.bx.bx-bath &nbsp
+                                    p Phòng tắm:&nbsp
+                                    b= posts.so_phong_tam
+                            if posts.so_tang == 0
+                            else
+                                .ngang
+                                    i.bx.bx-layer-plus &nbsp
+                                    p Số tầng:&nbsp
+                                    b= posts.so_tang
+                        
+block script
+    script(src='/js/dropclick.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js')
+    script(type="text/javascript").
+        let thumbnails = document.getElementsByClassName('thumbnail');
+        let activeImages = document.getElementsByClassName('actives');
+        for (var i=0; i < thumbnails.length; i++){
+            thumbnails[i].addEventListener('mouseover', function(){
+                if (activeImages.length > 0){
+                    activeImages[0].classList.remove('actives')
+                }
+                this.classList.add('actives')
+                document.getElementById('featured').src = this.src
+            })
+        }
+
+        const time = new Date().getTime();
+        console.log(time);
+        function ConfirmDialog()  {
+            swal({   title: "Xóa bài viết?",   
+                text: "Bạn chắc chắn muốn xóa bài viết này?",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "Tiếp tục xóa!",   
+                cancelButtonText: "Quay lại!",   
+                closeOnConfirm: false,   
+                closeOnCancel: false }, 
+        function(isConfirm){   
+            if (isConfirm) 
+                {   
+                    swal("Đã xóa thành công!", "Bài viết của bạn đã được xóa.", "success");   
+                    document.getElementById("delete").submit();
+                } 
+                else {     
+                    swal("Hủy", "Bài viết đã được dữ lại!", "error");   
+                    } });
+                }
+    
+
+        

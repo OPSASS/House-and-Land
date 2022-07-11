@@ -1,0 +1,993 @@
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{title} | HOUSE AND LANDS
+    link(rel="stylesheet" href="/css/pages/home/index.css")
+    link(href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet')
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css")
+    link(rel="icon" href="/img/logo.ico")
+    -url = "http://localhost:8800/images/"
+    if user
+      #chat.an(onclick="Chat()")
+        .bx.bx-message-square-dots.bx-sm#chatic
+      #chat-show
+        .nav-chat
+          h4 Bạn cần hỗ trợ?
+          //- button close
+          button(onclick="Close()").butt-x X
+        .box-chat
+          .ad-chat
+            img(src="/img/no-avt.png", alt="alt").ad-avt
+            .tx-chat Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+          .me-chat
+            if user.profilePicture
+              img(src=user.profilePicture, alt="").me-avt
+            else 
+              img(src="/img/no-avt.png", alt="").me-avt
+            .tx-chat-me Lorem ipsum dolor sit adipisicing elit. &#128512 &#128512
+        .seen 
+          .box-seen
+            textarea(name="", cols="30", rows="10") 
+          button(onclick="Send()").send.bx.bx-send.bx-sm
+    else
+      #chat.an(onclick="Chat()")
+        .bx.bx-message-square-dots.bx-sm#chatic
+      #chat-show
+        .nav-chat
+          h4 Bạn cần hỗ trợ?
+          //- button close
+          button(onclick="Close()").butt-x X
+        .box-chat
+          .form-ask-dn
+            p(style="margin-bottom: 20px;") Bạn cần đăng nhập để tiếp tục!
+            a#ask-dn(href="/auth/login").butt-dn Đăng nhập
+    nav.chuxam
+      #navtop.navtop.font2
+        .container
+          .allnav
+            .cham.call
+              i.bx.bx-phone-call(style="margin-right: 10px;")
+              i Tổng đài: (+84)987654321
+            .logo
+              a(href="/").font3.cham  HOUSE AND LANDS
+            .ntr
+              if user 
+                a(href="/posts/dang-tin-bds").post.cham  ĐĂNG BÀI
+                p(style="margin:0 10px") |
+                .loginus
+                  if user.profilePicture
+                    img.avtus(src=user.profilePicture)
+                    .users 
+                      if user.username 
+                        .dropclick.an(onclick="Dropclick()")= user.username
+                          i.bx.bx-chevron-down
+                          .dropclick-content#Dropclick
+                            if user.name
+                              a(href="/user/"+user._id) Thông tin cá nhân
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                            else 
+                              a(href="/user/"+user._id) Thêm thông tin
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                      else
+                        .dropclick.an(onclick="Dropclick()") Thêm thông tin
+                          i.bx.bx-chevron-down
+                          .dropclick-content#Dropclick
+                            if user.name
+                              a(href="/user/"+user._id) Thông tin cá nhân
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                            else 
+                              a(href="/user/"+user._id) Thêm thông tin
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                  else
+                    img.avtus(src="/img/no-avt.png")
+                    .users 
+                      if user.username 
+                        .dropclick.an(onclick="Dropclick()")= user.username
+                          i.bx.bx-chevron-down
+                          .dropclick-content#Dropclick
+                            if user.name
+                              a(href="/user/"+user._id) Thông tin cá nhân
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                            else 
+                              a(href="/user/"+user._id) Thêm thông tin
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                      else
+                        .dropclick.an(onclick="Dropclick()") Thêm thông tin
+                          i.bx.bx-chevron-down
+                          .dropclick-content#Dropclick
+                            if user.name
+                              a(href="/user/"+user._id) Thông tin cá nhân
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                            else 
+                              a(href="/user/"+user._id) Thêm thông tin
+                              a(href='/auth/logout') ĐĂNG XUẤT
+              else
+                a(href="/auth/login").post.cham  ĐĂNG BÀI
+                p(style="margin:0 10px") |
+                a.loginus(href="/auth/login")
+                  .giuangang 
+                    i.bx.bxs-user-circle.bx-md(style="margin-right: 5px;")
+                    p(style="color: #999999") ĐĂNG NHẬP
+        #navt.font2
+          .dropmain
+            .dropdown
+              a.nhanh(href="/" class=(title == 'Home') ? 'active' : null) Home
+            .dropdown
+              a.nhanh(href="/" class=(title == 'Mua & Thuê') ? 'active' : null) Mua & Bán
+              .dropdown-content.animate__animated.animate__bounceIn
+                a(href="/mua-ban/mua-ban-nha") Mua bán nhà
+                a(href="/mua-ban/mua-nha-mat-pho") Mua nhà mặt phố 
+                a(href="/mua-ban/mua-can-ho-chung-cu") Mua căn hộ chung cư
+                a(href="/mua-ban/mua-can-ho-villa") Mua căn hộ, villa 
+                a(href="/mua-ban/mua-kho-nha-suong") Mua kho, nhà sưởng 
+                a(href="/mua-ban/mua-mat-bang") Mua mặt bằng
+            .dropdown
+              a.nhanh(href="/" class=(title == 'Dự án') ? 'active' : null) Cho Thuê
+              .dropdown-content.animate__animated.animate__bounceIn
+                a(href="/cho-thue/thue-can-ho-chung-cu") Thuê căn hộ chung cư      
+                a(href="/cho-thue/thue-mat-bang") Thuê mặt bằng   
+                a(href="/cho-thue/thue-van-phong") Thuê văn phòng
+                a(href="/cho-thue/thue-nha-tro") Thuê nhà trọ 
+                a(href="/cho-thue/thue-cua-hang") Thuê cửa hàng 
+                a(href="/cho-thue/thue-kho-nha-suong") Thuê kho, nhà sưởng
+                
+            .dropdown
+              a.nhanh(href="/" class=(title == 'Chung cư') ? 'active' : null) Sang nhượng
+              .dropdown-content.animate__animated.animate__bounceIn
+                a(href="/sang-nhuong/sang-nhuong-dat") Sang nhượng đất
+                a(href="/sang-nhuong/sang-nhuong-nha-rieng") Sang nhượng nhà riêng
+                a(href="/sang-nhuong/sang-nhuong-can-ho-chung-cu") Sang nhượng căn hộ chung cư
+                a(href="/sang-nhuong/sang-nhuong-cua-hang") Sang nhượng cửa hàng 
+
+            .dropdown
+              a.nhanh(href="/" class=(title == 'Thổ cư') ? 'active' : null) Thổ cư
+              .dropdown-content.animate__animated.animate__bounceIn
+                a(href="/tho-cu/mua-ban-dat") Mua bán đất 
+                a(href="/tho-cu/dat-cho-thue") Đất cho thuê 
+                a(href="/tho-cu/dat-tho-cu") Đất thổ cư
+                a(href="/tho-cu/dat-nen-du-an") Đất nền dự án 
+                a(href="/tho-cu/dat-canh-tac") Đất canh tác
+
+            .dropdown
+              a.nhanh(href="/" class=(title == 'Danh bạ ') ? 'active' : null) Danh bạ
+              .dropdown-content.animate__animated.animate__bounceIn
+                a(href="/danh-ba/nha-moi-gioi") Nhà môi giới
+                a(href="/danh-ba/doanh-nghiep") Doanh nghiệp 
+    .theme
+      .slider
+        .slides
+          input#radio1(type="radio" name="radio-btn")
+          input#radio2(type="radio" name="radio-btn")
+          input#radio3(type="radio" name="radio-btn")
+          input#radio4(type="radio" name="radio-btn")
+          .slide.first
+            img(src="img/img.jpg" alt="")
+          .slide
+            img(src="img/img1.jpg" alt="")
+          .slide
+            img(src="img/img2.jpg" alt="")
+          .slide
+            img(src="img/img3.jpg" alt="")
+          .navigation-auto
+            .auto-btn1
+            .auto-btn2
+            .auto-btn3
+            .auto-btn4
+        .navigation-manual
+          label.manual-btn(for="radio1")
+          label.manual-btn(for="radio2")
+          label.manual-btn(for="radio3")
+          label.manual-btn(for="radio4")
+      
+      
+    header.container.animate__animated.animate__animated
+      form(action="/posts/search/key", method="get")
+        .searchform
+          .luachon.searchable
+            input#de(type="text" placeholder="-- Trên toàn quốc --" onkeyup="filterFunction(this,event)" name="city" autocomplete="off") 
+            .muiten180.bx.bx-chevron-down.bx-xs
+            ul#city.bong
+              each city, index in cities
+                li(value=city._id)= city.name
+            
+            select#money(name="money")
+              option(value="" disabled selected) -- Tất cả giá thành --
+              option(value="0") Thỏa thuận
+              option(value="1") Dưới 500 triệu
+              option(value="2") 500 - 1 tỷ
+              option(value="3") 1 - 2 tỷ
+              option(value="4") 2 - 3 tỷ
+              option(value="5") 3 - 5 tỷ
+              option(value="6") 5 - 7 tỷ
+              option(value="7") 7 - 10 tỷ
+              option(value="8") Trên 10 tỷ
+
+            
+            select#area(name="area")
+              option(value="" disabled selected) -- Tất cả diện tích --
+              option(value="1") Dưới 30m²
+              option(value="2") 30-50m²
+              option(value="3") 50-80m²
+              option(value="4") 80-120m²
+              option(value="5") 120-200m²
+              option(value="6") 200-300m²
+              option(value="7") Trên 300m²
+          .searchbox
+            input.search(type="search", name="q", placeholder="Tìm kiếm dự án, nhà đất, địa điểm,..." value="")
+            button.btns(type="submit")
+              i.bx.bx-search.bx-sm
+      .container
+        .tnb
+          .tab
+            button.bo.tablinks#defaultOpen(onclick="opentab(event, 'tnb')") Tin nổi bật
+            button.bo.tablinks(onclick="opentab(event, 'tt')") Tin tức
+            button.bo.tablinks(onclick="opentab(event, 'tv')") Tư vấn
+            a(href="/") Xem thêm ➜
+          #tnb.tabcontent
+            a(href="/news/tin-noi-bat").shownd
+              #imgt.anh1
+              h2 BĐS nghỉ dưỡng Việt Nam – tái khởi động với các thương hiệu khách sạn quốc tế
+              //- article time
+              i.bx.bx-time 1 giờ trước
+            .ttnd
+              a(href="/news/tin-noi-bat") BĐS nghỉ dưỡng Việt Nam – tái khởi động với các thương hiệu khách sạn quốc tế
+              h3 Thị trường BĐS hưởng lợi khi dân số siêu giàu tại Việt Nam tăng nhanh
+              h3 Vai trò của Internet với bất động sản
+              h3 Hải Phòng cấp phép xây 2 dự án nhà ở cho công nhân hơn 85 triệu đô
+              h3 Thị trường đất công nghiệp miền Nam dần khôi phục
+              h3 Hà Nội duyệt quy hoạch 5 phân khu đô thị tại thị xã Sơn Tây
+
+          #tt.tabcontent
+            .shownd
+              #imgt.anh2
+              h2 Những tiêu chí mới nào người mua quan tâm khi “tậu” bất động sản?
+              //- article time
+              i.bx.bx-time 5 giờ trước
+            .ttnd
+              h3 Những tiêu chí mới nào người mua quan tâm khi “tậu” bất động sản?
+              h3 Ưu đãi độc quyền từ hnl.com.vn dành riêng cho các khách hàng mới
+              h3 Căn hộ khu Tây TP.HCM: cầu thừa – cung thiếu
+              h3 [Cập nhật] Lãi suất ngân hàng vay mua nhà tháng 3/2022: Thấp nhất 3,9%/năm
+              h3 Berriver Jardin: căn hộ cách phố cổ 5km, giá từ 36 triệu/m2 có gì?
+              h3 Nhà đầu tư tìm kiếm sản phẩm ở vùng trũng bất động sản
+
+
+          #tv.tabcontent
+            .shownd
+              #imgt.anh3
+              h2 11 vật dụng cực bẩn trong nhà thường bị bỏ quên trong quá trình dọn dẹp
+              //- article time
+              i.bx.bx-time 2 ngày
+            .ttnd
+              h3 11 vật dụng cực bẩn trong nhà thường bị bỏ quên trong quá trình dọn dẹp
+              h3 Khoảng lùi cho không gian sống đúng nghĩa
+              h3 Tổng quan về huyện Ba Vì, Hà Nội
+              h3 Mệnh Kim hợp cây gì để bàn làm việc và trang trí không gian sống?
+              h3 Mách bạn “tuyệt chiêu” hút ẩm không khí bằng 10 loại cây trồng trong nhà
+              h3 Điều kiện và mẫu đơn xin ngân hàng giảm lãi suất cho vay do dịch Covid
+
+    body
+      .container
+        .posts.post1
+          h1.font4 Dự án bất động sản
+          button.tablink2#defaultOpen2(onclick="opentab2(event, 'dkc')") Đang khởi công
+          button.tablink2(onclick="opentab2(event, 'dmb')") Đang mở bán
+          button.tablink2(onclick="opentab2(event, 'dbg')") Đã bàn giao
+          #dkc.tabcontent2
+            .o3xn.bong
+              a(href="/du-an/dang-khoi-cong/a").a1
+                .mo
+                .ttn
+                  h3 Aqua City 
+                  h5 6.7-8tỷ 
+                  h5 |
+                  h5.tip Xã Long Hưng, Thành phố Biên Hòa, Tỉnh Đ...
+                    span.tiptext Xã Long Hưng, Biên Hòa, Đồng Nai, Xã Long Hưng, Thành phố Biên Hòa, Tỉnh Đồng Nai
+              a(href="/").a2
+                .mo
+                .ttn
+                  h3 Vinhomes Grand Park
+                  div
+                    h5 28 - 45 triệu/m2
+                    h5 |
+                    h5 Long Thạnh Mỹ, Quận 9, Hồ Chí Minh
+              a(href="/").a3
+                .mo
+                .ttn
+                  h3 Vinhomes Ocean Park
+                  div
+                    h5 1.3 - 4.1 tỷ
+                    h5 |
+                    h5 Xã Dương Xá, Huyện Gia Lâm, Hà Nội
+           
+              a(href="/").a4
+                .mo
+                .ttn
+                  h3 Vinhomes Smart City
+                  div
+                    h5 35 - 40 triệu/m2
+                    h5 |
+                    h5.tip Phường Đại Mỗ, Q.Nam Từ Liêm, H...
+                      span.tiptext Đại Mỗ, Phường Đại Mỗ, Quận Nam Từ Liêm, Thành phố Hà Nội
+              a(href="/").a5
+                .mo
+                .ttn
+                  h3 The Lotus Center
+                  div
+                    h5 32 - 50 triệu/m2
+                    h5 |
+                    h5.tip Đường Võ Chí Công, Phú Thượng, ...
+                      span.tiptext Khu Đô Thị Ciputra, Tây Hồ Tây, Hà Nội, Phường Phú Thượng, Quận Tây Hồ, Thành phố Hà Nội
+              a(href="/").a6
+                .mo
+                .ttn
+                  h3 The Stars Village
+                  div
+                    h5 13 - 25 triệu/m2
+                    h5 |
+                    h5 Xã Nhơn Đức, Nhà Bè, Hồ Chí Minh
+
+          #dmb.tabcontent2
+            .o3xn
+              a(href="/").a7
+                .mo
+                .ttn
+                  h3 New Galaxy
+                  div
+                    h5 25 - 27 triệu/m2
+                    h5 |
+                    h5.tip Đường Thống Nhất, xã Đông Hòa,...
+                      span.tiptext Đường Thống Nhất, Phường Đồng Hoà, Thị xã Dĩ An, Tỉnh Bình Dương
+              a(href="/").a8
+                .mo
+                .ttn
+                  h3 Five Stars Westlake
+                  div
+                    h5 32 - 40 triệu/m2
+                    h5 |
+                    h5.tip 162 Hoàng Hoa Thám, Thuỵ Khuê,...
+                      span.tiptext 162 Hoàng Hoa Thám, Quận Tây Hồ, TP. Hà Nội, Phường Thụy Khuê, Quận Tây Hồ, Thành phố Hà Nội
+              a(href="/").a9
+                .mo
+                .ttn
+                  h3 Thăng Long Capital
+                  div
+                    h5 18 - 22 triệu/m2
+                    h5 |
+                    h5.tip Khu đô thị mới Nam An Khánh,...
+                      span.tiptext Khu đô thị mới Nam An Khánh, Hoài Đức, Hà Nội, Xã An Khánh, Huyện Hoài Đức, Thành phố Hà Nội 
+              a(href="/").a10
+                .mo
+                .ttn
+                  h3 Căn hộ Mường Thanh Gò Vấp
+                  div
+                    h5 21 - 25 triệu/m2
+                    h5 |
+                    h5.tip Đường Nguyễn Văn Dung, Phườ...
+                      span.tiptext Nguyễn Văn Dung, Phường 6, Quận Gò Vấp, Thành phố Hồ Chí Minh
+              a(href="/").a11
+                .mo
+                .ttn
+                  h3 An Phú New City
+                  div
+                    h5 155 - 165 triệu/m2
+                    h5 |
+                    h5.tip Đường Nguyễn Hoàng, Phường...
+                      span.tiptext Nguyễn Hoàng, Xã An Phú, Quận 2, Thành phố Hồ Chí Minh
+              a(href="/").a12
+                .mo
+                .ttn
+                  h3 Asiana Capella
+                  div
+                    h5 26.8 - 45 triệu/m2
+                    h5 |
+                    h5.tip Số 184 Đường Trần Văn Kiểu,...
+                      span.tiptext 184 Đường Trần Văn Kiểu, Phường 10, Quận 6, Thành phố Hồ Chí Minh
+          #dbg.tabcontent2
+            .o3xn
+
+              a(href="/").a13
+                .mo
+                .ttn
+                  h3 Bình Minh Garden
+                  div
+                    h5 > 2.5 Tỷ
+                    h5 |
+                    h5.tip 93 Đường Đức Giang, Thượng...
+                      span.tiptext 3 Đường Đức Giang, Phường Thượng Thanh, Quận Long Biên, Thành phố Hà Nội
+              a(href="/").a14
+                .mo
+                .ttn
+                  h3 Celadon City
+                  div
+                    h5 28 - 35 triệu/m2
+                    h5 |
+                    h5.tip Số 88 đường N1, Sơn Kỳ, Tân...
+                      span.tiptext Số 88 đường N1, Xã Sơn Kỳ, Quận Tân Phú, Thành phố Hồ Chí Minh
+              a(href="/").a15
+                .mo
+                .ttn
+                  h3 Diamond Island
+                  div
+                    h5 1.15 - 1.76 tỷ
+                    h5 |
+                    h5.tip Đường Long Thuận, Trường Th...
+                      span.tiptext Đường Long Thuận, Xã Trường Thành, Quận 9, Thành phố Hồ Chí Minh
+
+              a(href="/").a16
+                .mo
+                .ttn
+                  h3 Feliz En Vista
+                  div
+                    h5 39 triệu/m2
+                    h5 |
+                    h5.tip Đường Đồng Văn Cống, Thạnh Mỹ...
+                      span.tiptext Đường Đồng Văn Cống, Phường Thạnh Mỹ Lợi, Quận 2, Thành phố Hồ Chí Minh
+              a(href="/").a17
+                .mo
+                .ttn
+                  h3 Goldmark City
+                  div
+                    h5 23 triệu/m2
+                    h5 |
+                    h5.tip 136 Hồ Tùng Mậu, Phú Diễn, Bắc...
+                      span.tiptext 136 Hồ Tùng Mậu, Phường Phú Diễn, Quận Bắc Từ Liêm, Thành phố Hà Nội
+              a(href="/").a18
+                .mo
+                .ttn
+                  h3 HaDo Centrosa Garden
+                  div
+                    h5 3.9 - 6.9 tỷ
+                    h5 |
+                    h5.tip Số 200 đường 3/2, P.12, quận 10,...
+                      span.tiptext Số 200 đường 3/2, Phường 12, Quận 10, Thành phố Hồ Chí Minh
+        
+        .posts#post2 
+          h1.font4 Tin mới đăng
+          button.tablink3#defaultOpen3(onclick="opentab3(event, 'db')") Đang bán
+          button.tablink3(onclick="opentab3(event, 'ct')") Cho thuê
+          button.tablink3(onclick="opentab3(event, 'sn')") Sang nhượng
+          #db.tabcontent3
+            .khungpost
+              each post in posts.slice(0, 9)
+                if post.need ==="Bán"
+                  a(href="/mua-ban-bds/"+post.slug).opost
+                    if post.service === "vip"
+                      .ribbon
+                      .vip-title CẦN BÁN GẤP
+                    each upload in uploads
+                      if upload.postId === post.postId
+                        if upload.files[0]
+                          .imgpost
+                            if post.status === "successful"
+                              img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                            img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                            .img-length
+                              .giuangang
+                                span.bx.bx-time(style="margin-right: 3px;")
+                                span= moment(post.createdAt).locale('vi').fromNow()
+                              div
+                                span(style="margin-right: 3px;")= upload.files.length
+                                span.bx.bx-images
+                        else
+                          .imgpost
+                            if post.status === "successful"
+                              img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                            img.oimg(src="/img/no-image.png")
+                            .img-length
+                              .ngang
+                                i.bx.bx-time(style="margin-right: 3px;")
+                                p= moment(post.createdAt).locale('vi').fromNow()
+                    .khungtit
+                      h3.haidong= post.title
+                      .ngang
+                        .giuangang
+                          i.bx.bx-money-withdraw
+                          if post.currency === "VNĐ"
+                            if post.money / 1000000000 < 1 
+                              b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²" 
+                            else 
+                              -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                                b#money_fix(style="padding: 0 5px")= ty
+                          else
+                            p &nbsp
+                            b(style="font-size: 14px")= post.currency
+                      .ngang
+                        .giuangang
+                          i.bx.bx-area
+                          b(style="padding: 0 5px")= post.area
+                          p m²
+                        .ttnha.ngang
+                          if post.so_tang == 0
+                          else
+                            .ngang 
+                              i.bx.bx-layer-plus
+                              b(style="padding: 0 20px 0 5px")= post.so_tang
+                          if post.so_phong_ngu == 0
+                          else
+                            .ngang 
+                              i.bx.bx-bed
+                              b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                          if post.so_phong_tam == 0
+                          else
+                            .ngang 
+                              i.bx.bx-bath
+                              b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                      
+                      .ngang
+                        i.bx.bx-map-pin
+                        p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                      if post.way 
+                        .ngang
+                          i.bx.bx-purchase-tag-alt
+                          p.haidong(style="padding: 0 5px")= post.way
+                      .ngang
+                        i.bx.bxs-hand-right
+                        b(style="padding: 0 5px")= post.need
+                      
+            #add8b
+              .khungpost
+                each post in posts.slice(8, 17)
+                  if post.need ==="Bán"
+                    a(href="/mua-ban-bds/"+post.slug).opost
+                      each upload in uploads
+                        if upload.postId === post.postId
+                          if upload.files[0]
+                            .imgpost
+                              if post.status === "successful"
+                                img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                              img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                              .img-length
+                                div
+                                  span.bx.bx-time(style="margin-right: 3px;")
+                                  span= moment(post.createdAt).locale('vi').fromNow()
+                                div
+                                  span(style="margin-right: 3px;")= upload.files.length
+                                  span.bx.bx-images
+                          else
+                            .imgpost
+                              if post.status === "successful"
+                                img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                              img.oimg(src="/img/no-image.png")
+                              .img-length
+                                .ngang
+                                  i.bx.bx-time(style="margin-right: 3px;")
+                                  p= moment(post.createdAt).locale('vi').fromNow()
+                      .khungtit
+                        h3.haidong= post.title
+                        .ngang
+                          .giuangang
+                            i.bx.bx-money-withdraw
+                            if post.currency === "VNĐ"
+                              if post.money / 1000000000 < 1 
+                                b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                              else 
+                                -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                                  b#money_fix(style="padding: 0 5px")= ty
+                            else
+                              p &nbsp
+                              b(style="font-size: 14px")= post.currency
+                        .ngang
+                          .giuangang
+                            i.bx.bx-area
+                            b(style="padding: 0 5px")= post.area
+                            p m²
+                          .ttnha.ngang
+                            if post.so_tang == 0
+                            else
+                              .ngang 
+                                i.bx.bx-layer-plus
+                                b(style="padding: 0 20px 0 5px")= post.so_tang
+                            if post.so_phong_ngu == 0
+                            else
+                              .ngang 
+                                i.bx.bx-bed
+                                b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                            if post.so_phong_tam == 0
+                            else
+                              .ngang 
+                                i.bx.bx-bath
+                                b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                        
+                        .ngang
+                          i.bx.bx-map-pin
+                          p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                        if post.way 
+                          .ngang
+                            i.bx.bx-purchase-tag-alt
+                            p.haidong(style="padding: 0 5px")= post.way
+                        .ngang
+                          i.bx.bxs-hand-right
+                          b(style="padding: 0 5px")= post.need 
+
+            .buttshow
+              button(onclick="xemthem()").them Xem thêm
+              a(href="/posts/tin-dang-ban").tatca Xem tất cả
+          
+          #ct.tabcontent3
+            .khungpost
+              each post in posts.slice(0, 9)
+                if post.need ==="Cho thuê"
+                  a(href="/mua-ban-bds/"+post.slug).opost
+                    if post.service === "vip"
+                      .ribbon
+                      .vip-title CHO THUÊ GẤP
+                    each upload in uploads
+                      if upload.postId === post.postId
+                        if upload.files[0]
+                          .imgpost
+                            if post.status === "successful"
+                              img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                            img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                            .img-length
+                              .giuangang
+                                span.bx.bx-time(style="margin-right: 3px;")
+                                span= moment(post.createdAt).locale('vi').fromNow()
+                              div
+                                span(style="margin-right: 3px;")= upload.files.length
+                                span.bx.bx-images
+                          
+                        else
+                          .imgpost
+                            if post.status === "successful"
+                              img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                            img.oimg(src="/img/no-image.png")
+                            .img-length
+                              .ngang
+                                i.bx.bx-time(style="margin-right: 3px;")
+                                p= moment(post.createdAt).locale('vi').fromNow()
+                    .khungtit
+                      h3.haidong= post.title
+                      .ngang
+                        .giuangang
+                          i.bx.bx-money-withdraw
+                          if post.currency === "VNĐ"
+                            if post.money / 1000000000 < 1 
+                              b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                            else 
+                              -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                                b#money_fix(style="padding: 0 5px")= ty
+                          else
+                            p &nbsp
+                            b(style="font-size: 14px")= post.currency
+                      .ngang
+                        .giuangang
+                          i.bx.bx-area
+                          b(style="padding: 0 5px")= post.area
+                          p m²
+                        .ttnha.ngang
+                          if post.so_tang == 0
+                          else
+                            .ngang 
+                              i.bx.bx-layer-plus
+                              b(style="padding: 0 20px 0 5px")= post.so_tang
+                          if post.so_phong_ngu == 0
+                          else
+                            .ngang 
+                              i.bx.bx-bed
+                              b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                          if post.so_phong_tam == 0
+                          else
+                            .ngang 
+                              i.bx.bx-bath
+                              b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                      .ngang
+                        i.bx.bx-map-pin
+                        p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                      if post.way 
+                        .ngang
+                          i.bx.bx-purchase-tag-alt
+                          p.haidong(style="padding: 0 5px")= post.way
+                      .ngang
+                        i.bx.bxs-hand-right
+                        b(style="padding: 0 5px")= post.need 
+            #add8t
+              .khungpost
+                each post in posts.slice(8, 17)
+                  if post.need ==="Cho thuê"
+                    a(href="/mua-ban-bds/"+post.slug).opost
+                      each upload in uploads
+                        if upload.postId === post.postId
+                          if upload.files[0]
+                            .imgpost
+                              if post.status === "successful"
+                                img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                              img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                              .img-length
+                                div
+                                  span.bx.bx-time(style="margin-right: 3px;")
+                                  span= moment(post.createdAt).locale('vi').fromNow()
+                                div
+                                  span(style="margin-right: 3px;")= upload.files.length
+                                  span.bx.bx-images
+                          else
+                            .imgpost
+                              if post.status === "successful"
+                                img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                              img.oimg(src="/img/no-image.png")
+                              .img-length
+                                .ngang
+                                  i.bx.bx-time(style="margin-right: 3px;")
+                                  p= moment(post.createdAt).locale('vi').fromNow()
+                      .khungtit
+                        h3.haidong= post.title
+                        .ngang
+                          .giuangang
+                            i.bx.bx-money-withdraw
+                            if post.currency === "VNĐ"
+                              if post.money / 1000000000 < 1 
+                                b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                              else 
+                                -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                                  b#money_fix(style="padding: 0 5px")= ty
+                            else
+                              p &nbsp
+                              b(style="font-size: 14px")= post.currency
+                        .ngang
+                          .giuangang
+                            i.bx.bx-area
+                            b(style="padding: 0 5px")= post.area
+                            p m²
+                          .ttnha.ngang
+                            if post.so_tang == 0
+                            else
+                              .ngang 
+                                i.bx.bx-layer-plus
+                                b(style="padding: 0 20px 0 5px")= post.so_tang
+                            if post.so_phong_ngu == 0
+                            else
+                              .ngang 
+                                i.bx.bx-bed
+                                b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                            if post.so_phong_tam == 0
+                            else
+                              .ngang 
+                                i.bx.bx-bath
+                                b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                        .ngang
+                          i.bx.bx-map-pin
+                          p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                        if post.way 
+                          .ngang
+                            i.bx.bx-purchase-tag-alt
+                            p.haidong(style="padding: 0 5px")= post.way
+                        .ngang
+                          i.bx.bxs-hand-right
+                          b(style="padding: 0 5px")= post.need     
+         
+            .buttshow
+              button(onclick="xemthem()").them Xem thêm
+              a(href="/posts/tin-cho-thue").tatca Xem tất cả
+
+          #sn.tabcontent3
+            .khungpost
+              each post in posts.slice(0, 9)
+                if post.need ==="Sang nhượng"
+                  a(href="/mua-ban-bds/"+post.slug).opost
+                    if post.service === "vip"
+                      .ribbon
+                      .vip-title NHƯỢNG GẤP
+                    each upload in uploads
+                      if upload.postId === post.postId
+                        if upload.files[0]
+                          .imgpost
+                            if post.status === "successful"
+                              img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                            img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                            .img-length
+                              .giuangang
+                                span.bx.bx-time(style="margin-right: 3px;")
+                                span= moment(post.createdAt).locale('vi').fromNow()
+                              div
+                                span(style="margin-right: 3px;")= upload.files.length
+                                span.bx.bx-images
+                        else
+                          .imgpost
+                            if post.status === "successful"
+                              img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                            img.oimg(src="/img/no-image.png")
+                            .img-length
+                              .ngang
+                                i.bx.bx-time(style="margin-right: 3px;")
+                                p= moment(post.createdAt).locale('vi').fromNow()
+                    .khungtit
+                      h3.haidong= post.title
+                      .ngang
+                        .giuangang
+                          i.bx.bx-money-withdraw
+                          if post.currency === "VNĐ"
+                            if post.money / 1000000000 < 1 
+                              b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                            else 
+                              -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                                b#money_fix(style="padding: 0 5px")= ty
+                          else
+                            p &nbsp
+                            b(style="font-size: 14px")= post.currency
+                      .ngang
+                        .giuangang
+                          i.bx.bx-area
+                          b(style="padding: 0 5px")= post.area
+                          p m²
+                        .ttnha.ngang
+                          if post.so_tang == 0
+                          else
+                            .ngang 
+                              i.bx.bx-layer-plus
+                              b(style="padding: 0 20px 0 5px")= post.so_tang
+                          if post.so_phong_ngu == 0
+                          else
+                            .ngang 
+                              i.bx.bx-bed
+                              b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                          if post.so_phong_tam == 0
+                          else
+                            .ngang 
+                              i.bx.bx-bath
+                              b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                       
+                      .ngang
+                        i.bx.bx-map-pin
+                        p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                      if post.way 
+                        .ngang
+                          i.bx.bx-purchase-tag-alt
+                          p.haidong(style="padding: 0 5px")= post.way
+                      .ngang
+                        i.bx.bxs-hand-right
+                        b(style="padding: 0 5px")= post.need        
+            #add8b
+              .khungpost
+                each post in posts.slice(8, 17)
+                  if post.need ==="Sang nhượng"
+                    a(href="/mua-ban-bds/"+post.slug).opost
+                      each upload in uploads
+                        if upload.postId === post.postId
+                          if upload.files[0]
+                            .imgpost
+                              if post.status === "successful"
+                                img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                              img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                              .img-length
+                                div
+                                  span.bx.bx-time(style="margin-right: 3px;")
+                                  span= moment(post.createdAt).locale('vi').fromNow()
+                                div
+                                  span(style="margin-right: 3px;")= upload.files.length
+                                  span.bx.bx-images
+                          else
+                            .imgpost
+                              if post.status === "successful"
+                                img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                              img.oimg(src="/img/no-image.png")
+                              .img-length
+                                .ngang
+                                  i.bx.bx-time(style="margin-right: 3px;")
+                                  p= moment(post.createdAt).locale('vi').fromNow()
+                      .khungtit
+                        h3.haidong= post.title
+                        .ngang
+                          .giuangang
+                            i.bx.bx-money-withdraw
+                            if post.currency === "VNĐ"
+                              if post.money / 1000000000 < 1 
+                                b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                              else 
+                                -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                                  b#money_fix(style="padding: 0 5px")= ty
+                            else
+                              p &nbsp
+                              b(style="font-size: 14px")= post.currency
+                        .ngang
+                          .giuangang
+                            i.bx.bx-area
+                            b(style="padding: 0 5px")= post.area
+                            p m²
+                          .ttnha.ngang
+                            if post.so_tang == 0
+                            else
+                              .ngang 
+                                i.bx.bx-layer-plus
+                                b(style="padding: 0 20px 0 5px")= post.so_tang
+                            if post.so_phong_ngu == 0
+                            else
+                              .ngang 
+                                i.bx.bx-bed
+                                b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                            if post.so_phong_tam == 0
+                            else
+                              .ngang 
+                                i.bx.bx-bath
+                                b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                        .ngang
+                          i.bx.bx-map-pin
+                          p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                        if post.way 
+                          .ngang
+                            i.bx.bx-purchase-tag-alt
+                            p.haidong(style="padding: 0 5px")= post.way
+                        .ngang
+                          i.bx.bxs-hand-right
+                          b(style="padding: 0 5px")= post.need 
+                               
+    
+            .buttshow
+              button(onclick="xemthem()").them Xem thêm
+              a(href="/posts/tin-sang-nhuong").tatca Xem tất cả
+
+    if user
+      if user.isAdmin === true
+        a(href="/admin" style="z-index: 100;").back.bx.bxs-bank.bong
+        a(href="/news/newsPost" style="z-index: 100; margin-top: 50px;").back.bx.bx-news.bong
+    
+    footer.bo
+      .container
+        .ftmain
+          div
+            h1.font3 Web BDS Demo:
+              h2 By:
+              .ifn
+                p Name: Pham Ngoc Minh
+                p Msv: 641174
+                p Class: K64CNTTA
+              h3 And
+              .ifn
+                p Name: Nguyễn Thị Kim Oanh
+                p Msv: 642709
+                p Class: K64CNTTA 
+          .ftitem
+            h4 NoCopyright © 2022 MOWeb. All rights reserved.
+          .canft
+            h1.font3 Mạng xã hội: 
+            p Theo dõi MOWeb để biết thêm thông tin 
+            ul.p2
+              li
+                a(href="https://www.facebook.com/Minhdz.ss1" target="_blank").bx.bxl-facebook-circle.bx-md.box-icon 
+              li
+                a(href="https://www.instagram.com/minhpiis/" target="_blank").bx.bxl-instagram.bx-md.box-icon 
+              li
+                a(href="https://mail.google.com/" target="_blank").bx.bxl-gmail.bx-md.box-icon 
+        .bottom
+         
+
+    script(src="/js/animation.js")
+    script(src="/js/chat.js")
+    script(src="/js/tab.js")
+    script(src="/js/slideshow.js")
+    script(src="/js/dropclick.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+    script(src="/js/sort.select.js")
+    script(src="https://www.google.com/recaptcha/api.js" async defer)
+    script(src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js")
+    script(type="text/javascript").
+      document.getElementById('defaultOpen2').click();
+      document.getElementById('defaultOpen3').click();
+      
+      
+      
+      function times() {
+        const ss1 = document.getElementById('ss1').value;
+        var add = ss1;
+        let dis;
+        var x = setInterval(()=> {
+          var now = new Date().getTime();
+          dis = add - now;
+          var secs = Math.floor((dis % (1000*60*60))/(1000*60));
+          var mins = Math.floor((dis % (1000*60))/(1000));
+          var hous = Math.floor((dis % (1000*60*60*24))/(1000*60*60));
+          var days = Math.floor((dis / (1000*60*60*24)));
+          document.getElementById('hous').innerHTML = hous;
+          document.getElementById('days').innerHTML = days;
+          if(dis == 0) {
+            stop();
+          }
+        })
+        console.log(ss1);
+      }
+      times();
+      function stop() {
+        console.log("stoped");
+        clearInterval(x);
+      }

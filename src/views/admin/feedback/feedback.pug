@@ -1,0 +1,148 @@
+extends ../layout-ad
+
+block link
+  link(rel="stylesheet", href="/css/admin/feedback/feedback.css")
+  
+block li1
+  li
+    a(href='/admin')
+      i.bx.bx-home-alt-2
+      span.links_name Trang quản trị
+    span.tooltip Trang quản trị
+block li2
+  li
+    a(href='/admin/users')
+      i.bx.bx-user
+      span.links_name Người dùng
+    span.tooltip Quản lý người dùng
+block li3
+  li
+    a(href='/admin/posts')
+      i.bx.bx-book-content
+      span.links_name Bài đăng
+    span.tooltip Quản lý bài viết
+//- block li4
+//-   li
+//-     a(href='/admin/chat')
+//-       i.bx.bx-chat
+//-       span.links_name Tin nhắn
+//-     span.tooltip Tin nhắn
+  
+block li5
+  li
+    a(href='/admin/chart')
+      i.bx.bx-pie-chart-alt-2
+      span.links_name Biểu đồ thống kê
+    span.tooltip Biểu đồ thống kê
+block li6
+  if requests.length > 0
+    .tb.notification= requests.length
+  li
+    a(href='/admin/feedback').choose
+      i.bx.bxs-envelope
+      span.links_name(style="color: #222222;") Phản hồi
+    span.tooltip Phản hồi
+     
+block li7
+  li
+    a(href='/admin/service')
+      i.bx.bx-cart-alt
+      span.links_name Gói dịch vụ
+    span.tooltip Gói dịch vụ
+
+block body
+  .container.bong
+    h1.title Phản hồi
+    .ngangnhieu
+      .feedback
+        h3 Thông tin phản hồi
+        .form-fb.bong
+          .giuangang
+            img(src="/img/no-avt.png", alt="")
+            - stars = 5;
+            .info
+              .ngang.user
+                b Oanh LOL 
+                .time 11:00 AM
+                .date 12/12/2019
+              if stars == "1"
+                .stars
+                  .bx.bxs-star
+                  .bx.bx-star
+                  .bx.bx-star
+                  .bx.bx-star
+                  .bx.bx-star
+              else if stars == "2"
+                .stars
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bx-star
+                  .bx.bx-star
+                  .bx.bx-star
+              else if stars == "3"
+                .stars
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bx-star
+                  .bx.bx-star
+              else if stars == "4"
+                .stars
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bx-star
+              else if stars == "5"
+                .stars 
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bxs-star
+                  .bx.bxs-star
+              else if stars == "0"
+                .stars 
+                  .bx.bx-star
+                  .bx.bx-star
+                  .bx.bx-star
+                  .bx.bx-star
+                  .bx.bx-star
+
+          .desc-fb
+            b Nội dung:
+            p Trang rất xịn sò con bò
+      
+      .delete 
+        h3 Yêu cầu xóa tài khoản
+        if requests.length == 0
+          p(style="margin: 10px 0") Chưa có yêu cầu nào
+        else
+          .all-rq
+            each rq in requests
+              .form-dl.bo.bong
+                .ngangnhieu
+                  .user-if
+                    .giuangang
+                      if rq.avt
+                        img(src=rq.avt, alt="")
+                      else
+                        img(src="/img/no-avt.png", alt="")
+                      .info
+                        .ngang.user
+                          b= rq.name
+                          .time= rq.createdAt.toLocaleTimeString()
+                          .date= new Date(rq.createdAt).toLocaleDateString()
+                  .butt
+                    .ngang.bong
+                      form(action="/admin/users/"+ rq.userId + "?_method=DELETE", method="post")
+                        input(type="submit" hidden)#accept
+                        label(for="accept").bx.bx-check.accept
+                      form(action="/admin/feedback/"+ rq.id, method="post") 
+                        input#close(type="submit" hidden)
+                        label(for="close").bx.bx-x.close
+                .gf
+                  b(style="padding: 10px 0") Lý do xóa tài khoản:
+                  if rq.reason === "khac"
+                    p(style="margin:10px;")= rq.other
+                  else
+                    p(style="margin: 10px")= rq.reason             

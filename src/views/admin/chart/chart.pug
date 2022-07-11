@@ -1,0 +1,242 @@
+extends ../layout-ad
+
+block link
+  link(rel="stylesheet", href="/css/admin/chart/chart.css")
+
+block li1
+  li
+    a(href='/admin')
+      i.bx.bx-home-alt-2
+      span.links_name Trang quản trị
+    span.tooltip Trang quản trị
+block li2
+  li
+    a(href='/admin/users')
+      i.bx.bx-user
+      span.links_name Người dùng
+    span.tooltip Quản lý người dùng
+block li3
+  li
+    a(href='/admin/posts')
+      i.bx.bx-book-content
+      span.links_name Bài đăng
+    span.tooltip Quản lý bài viết
+//- block li4
+//-   li
+//-     a(href='/admin/chat')
+//-       i.bx.bx-chat
+//-       span.links_name Tin nhắn
+//-     span.tooltip Tin nhắn
+  
+block li5
+  li
+    a(href='/admin/chart').choose
+      i.bx.bx-pie-chart-alt-2
+      span.links_name(style="color: #222222;") Biểu đồ thống kê
+    span.tooltip Biểu đồ thống kê
+block li6
+  li
+    a(href='/admin/feedback')
+      i.bx.bxs-envelope
+      span.links_name Phản hồi
+    span.tooltip Phản hồi
+block li7
+  li
+    a(href='/admin/service')
+      i.bx.bx-cart-alt
+      span.links_name Gói dịch vụ
+    span.tooltip Gói dịch vụ
+
+block body
+  if user.isAdmin == true
+    .backts
+      .container
+        h1.title.chutrang Bảng thống kê
+        .ngangnhieu.bong
+          .ocs.bo
+            .giuangang.ngangnhieu
+              .o-icon.bx.bx-dollar.bx-md.money.bong
+              div
+                h3 67.320.000 VNĐ
+                p.chuphai Doanh thu
+          .ocs.bo
+            .giuangang.ngangnhieu
+              .o-icon.bx.bx-user-plus.bx-md.new-us.bong
+              div
+                h3= newus.length
+                p.chuphai Thành viên mới
+          .ocs.bo
+            .giuangang.ngangnhieu
+              .o-icon.bx.bx-user.bx-md.user.bong
+              div
+                if users.length > 0
+                  h3= users.length
+                  p.chuphai Thành viên
+                else
+                  h3 0
+                  p.chuphai Thành viên
+          .ocs.bo
+            .giuangang.ngangnhieu
+              .o-icon.bx.bx-book-content.bx-md.view.bong
+              div
+                if posts.length > 0
+                  h3=posts.length
+                  p.chuphai Số bài viết
+                else
+                  h3 0
+                  p.chuphai Số bài viết
+    .container
+      .ngangnhieu
+        .chart.bo
+          h2(style="margin-left: 50px") Doanh thu theo tuần
+          canvas(id="myChart" style="max-width:90%; max-height: 450px" )
+        .chart2.bo.bong
+          h2.chuden(style="margin-left: 50px;") Doanh thu theo tháng
+          canvas(id="myChart2" style="max-width:90%; height: 360px" )
+  else
+    meta(http-equiv = "refresh" content = "0; url = /admin/come-back") 
+
+block script
+  script(src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js")
+  script(type="text/javascript").
+    const ctx = document.getElementById('myChart');
+    const myChart = new Chart(ctx, {
+      type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'],
+        datasets:[{
+          label: 'VNĐ',
+          data:[
+            936000,
+            660000,
+            728000,
+            628000,
+            588000,
+            824500,
+            998600,
+            1200000
+          ],
+          fill: {
+            target: 'origin',
+            above: '#13547a',   // Area will be red above the origin    // And blue below the origin
+          },
+          pointRadius: 2,//kich thuoc diem
+          tension: 0.38,//do cong
+          borderWidth:4,
+          borderColor:'white',
+          hoverBorderWidth: 5,
+          hoverBorderColor:'blue',
+        }]
+      },
+      options:{
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0,
+          }
+        },
+        tooltips:{
+          enabled:true,
+          mode:'index',
+          intersect: true,
+        },
+        scales:{
+          yAxes:[{
+            ticks:{
+              fontColor:'#222222',
+            },
+            gridLines:{
+              display:true,
+              color:'#222222',
+            },
+          }],
+          xAxes:[{
+            ticks:{
+              fontColor:'#222222',
+            },
+            gridLines:{
+              display:true,
+              color:'#222222',
+            },
+          }],
+        },
+      }
+    });
+
+    const ctxs = document.getElementById('myChart2');
+    const myChart2 = new Chart(ctxs, {
+      type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4'],
+        datasets:[{
+          label: 'VNĐ',
+          data:[
+            29360000,
+            35880000,
+            21245000,
+            31986000,
+          ],
+          pointRadius: 2,//kich thuoc diem
+          tension: 0.4,//do cong
+          borderWidth:2,
+          hoverBorderWidth: 3,
+          backgroundColor:'rgb(81, 188, 55)',
+          borderWidth:2,
+          hoverBorderWidth: 3,
+          hoverBorderColor:'green',
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Biểu đồ thống kê',
+          fontSize:20,
+          fontColor:'#222222',
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#222222',
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0,
+          }
+        },
+        tooltips:{
+          enabled:true,
+          mode:'index',
+          intersect:false,
+        },
+        scales:{
+          yAxes:[{
+            ticks:{
+              fontColor:'#222222',
+            },
+            gridLines:{
+              display:true,
+              color:'#222222',
+            },
+          }],
+          xAxes:[{
+            ticks:{
+              fontColor:'#222222',
+            },
+            gridLines:{
+              display:true,
+              color:'#222222',
+            },
+          }],
+        },
+      }
+    });
+
+                               
+        

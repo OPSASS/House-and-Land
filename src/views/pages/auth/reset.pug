@@ -1,0 +1,25 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/auth/login.css")
+block body
+  .container
+    .loginform
+      .loginimg
+        .loginof
+            p Hoặc bằng
+            #mxh 
+              a(href="/auth/facebook").hovf.bx.bxl-facebook-circle.bx-md
+              a(href="/404").hovt.bx.bxl-twitter.bx-md
+              a(href="/auth/google").hovg.bx.bxl-google.bx-md
+            .ask
+              p Bạn chưa có tài khoản?
+              a.bntadd(href="/auth/register") Đăng ký
+      form(action="/auth/reset", method="POST")#dangnhap.bo.bong
+        .form-group
+          .formitem
+            h1 Lấy lại mật khẩu
+            input.odn(type="text" name="email" required placeholder="Nhập email đăng ký")
+            input.odn(type="password" name="password" required minlength="8" placeholder="Mật khẩu mới")
+            input.odn(type="password" name="cpassword" required minlength="8" placeholder="Nhập lại mật khẩu")
+          input.bntsm(type="submit" value="Lấy lại mật khẩu")

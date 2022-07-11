@@ -1,0 +1,100 @@
+
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{title} | HOUSE AND LANDS
+    link(rel='stylesheet' href='/css/admin/layout-ad.css')
+    link(rel="icon" href="/img/logo.ico")
+    link(href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='/css/sweetalert2.min.css')
+    -url = "http://localhost:8800/images/"
+    block link
+    if user 
+      if user.isAdmin == true
+        nav
+          .nav-bar
+            .logo#btn
+              img(src='/img/logo.png').icon
+              .logo_name HOUSE AND LANDS
+            ul.nav-list
+              li
+                i.bx.bx-search
+                form(action="/posts/search/key", method="get")
+                  input(type='search' placeholder='Tìm kiếm...')
+                  span.tooltip Tìm kiếm
+              block li1
+              .tb.notification 8
+              block li2
+              .tb.notification 22
+              block li3
+              //- .tb.notification fix
+              block li4
+              block li5
+              block li6  
+              block li7
+              block li8
+              
+              li.profile
+                .profile-details
+                  div
+                    if user.profilePicture
+                      img(src=user.profilePicture).avt
+                    else
+                      img(src="/img/no-avt.png").avt
+                  .name_job
+                    .name= user.name
+                    .job Admin
+                #log_out
+                  button(onclick="document.location='/auth/logout'").butlog.bx.bx-log-out.bx-sm
+              block nav
+          body(onload="stop()")
+            #home-body
+              .butt-manager
+                button(onclick="dark()").dark
+                  #iconn.bx.bx-moon
+                if user.isAdmin === true
+                  a(href="/").back.bx.bx-store-alt.bong
+                  a(href="/news/newsPost" style="z-index: 100; margin-top: 50px;").back.bx.bx-news.bong
+              block body
+      else
+        meta(http-equiv = "refresh" content = "0; url = /admin/come-back")
+  script(src='/js/sweetalert2.all.min.js')
+  script.
+    function dark() {
+      const icon = document.querySelector('#iconn');
+      const e = document.body.classList;
+      e.toggle("dark-mode");
+
+      if (e.contains("dark-mode")) {
+        icon.classList.remove("bx-moon");
+        icon.classList.add("bxs-sun");
+      } else {
+        icon.classList.remove("bxs-sun");
+        icon.classList.add("bx-moon");
+      }
+
+    };
+
+    const sidebar = document.querySelector(".nav-bar");
+    const closeBtn = document.querySelector("#btn");
+    const searchBtn = document.querySelector(".bx-search");
+    closeBtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("open");
+      menuBtnChange();
+    });
+    searchBtn.addEventListener("click", ()=>{ 
+      sidebar.classList.toggle("open");
+      menuBtnChange();
+    });
+
+    function menuBtnChange() {
+      if(sidebar.classList.contains("open")){
+        closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+      }else {
+        closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
+      }
+    }
+
+  block script

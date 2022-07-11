@@ -1,0 +1,79 @@
+extends ../layout-ad
+
+block link
+  link(rel="stylesheet", href="/css/admin/home/home.css")
+block li1
+  li
+    a(href='/admin').choose
+      i.bx.bx-home-alt-2
+      span.links_name(style="color: #222222;") Trang quản trị
+    span.tooltip Trang quản trị
+block li2
+  li
+    a(href='/admin/users')
+      i.bx.bx-user
+      span.links_name Người dùng
+    span.tooltip Quản lý người dùng  
+block li3
+  li
+    a(href='/admin/posts')
+      i.bx.bx-book-content
+      span.links_name Bài đăng
+    span.tooltip Quản lý bài viết
+
+//- block li4
+//-   li
+//-     a(href='/admin/chat')
+//-       i.bx.bx-chat
+//-       span.links_name Tin nhắn
+//-     span.tooltip Tin nhắn
+  
+block li5
+  li
+    a(href='/admin/chart')
+      i.bx.bx-pie-chart-alt-2
+      span.links_name Biểu đồ thống kê
+    span.tooltip Biểu đồ thống kê
+block li6
+  li
+    a(href='/admin/feedback')
+      i.bx.bxs-envelope
+      span.links_name Phản hồi
+    span.tooltip Phản hồi
+block li7
+  li
+    a(href='/admin/service')
+      i.bx.bx-cart-alt
+      span.links_name Gói dịch vụ
+    span.tooltip Gói dịch vụ
+
+block body
+  .container
+    .home
+      .giuadoc
+        img(src="/img/logo.png", alt="alt" style="width: 300px; height: 300px;")
+        div
+          .ngang(style=" font-size: 30px")
+            p#Gtime
+            h3(style="margin:-4px 5px")= user.name
+          h2 Chào mừng đến trang quản trị!
+      img(src="/img/admin.png", alt="" style="width: 650px; height: auto;")
+    .box
+    .box
+    .box
+    .box
+    .box
+    .box
+    .box
+block script
+  script(type="text/javascript").
+    const time = new Date().getHours();
+    let greeting;
+    if (time < 10) {
+      greeting = "Chào buổi sáng";
+    } else if (time < 20) {
+      greeting = "Buổi chiều vui vẻ";
+    } else {
+      greeting = "Chào buổi tối";
+    }
+    document.getElementById("Gtime").innerHTML = greeting;

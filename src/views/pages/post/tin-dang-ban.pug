@@ -1,0 +1,91 @@
+extends ../../layout
+
+block link
+    link(rel="stylesheet", href="/css/pages/search/search.css")
+
+block body
+  .container
+    .link.font5
+      a(href="/") Trang chủ 
+      p > Tin đăng bán
+    if posts.length > 0 
+      .khungpost
+        each post in posts.slice(0, 18)
+          if post.need === 'Bán'
+            a(href="/mua-ban-bds/"+post.slug).opost
+              if post.service === "vip"
+                .ribbon
+                .vip-title CẦN BÁN GẤP
+              each upload in uploads
+                if upload.postId === post.postId
+                  if upload.files[0]
+                    .imgpost
+                      if post.status === "successful"
+                        img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                      img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                      .img-length
+                        .giuangang
+                          span.bx.bx-time(style="margin-right: 3px;")
+                          span= moment(post.createdAt).locale('vi').fromNow()
+                        div
+                          span(style="margin-right: 3px;")= upload.files.length
+                          span.bx.bx-images
+                  else
+                    .imgpost
+                      if post.status === "successful"
+                        img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                      img.oimg(src="/img/no-image.png")
+                      .img-length
+                        .ngang
+                          i.bx.bx-time(style="margin-right: 3px;")
+                          p= moment(post.createdAt).locale('vi').fromNow()
+              .khungtit
+                h3.haidong= post.title
+                .ngang
+                  .giuangang
+                    i.bx.bx-money-withdraw
+                    if post.currency === "VNĐ"
+                      if post.money / 1000000000 < 1 
+                        b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                      else 
+                        -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                          b#money_fix(style="padding: 0 5px")= ty
+                    else
+                      p &nbsp
+                      b(style="font-size: 14px")= post.currency
+                .ngang
+                  .giuangang
+                    i.bx.bx-area
+                    b(style="padding: 0 5px")= post.area
+                    p m²
+                  .ttnha.ngang
+                    if post.so_tang == 0
+                    else
+                      .ngang 
+                        i.bx.bx-layer-plus
+                        b(style="padding: 0 20px 0 5px")= post.so_tang
+                    if post.so_phong_ngu == 0
+                    else
+                      .ngang 
+                        i.bx.bx-bed
+                        b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                    if post.so_phong_tam == 0
+                    else
+                      .ngang 
+                        i.bx.bx-bath
+                        b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                
+                .ngang
+                  i.bx.bx-map-pin
+                  p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                if post.way 
+                  .ngang
+                    i.bx.bx-purchase-tag-alt
+                    p.haidong(style="padding: 0 5px")= post.way
+                .ngang
+                  i.bx.bxs-hand-right
+                  b(style="padding: 0 5px")= post.need 
+
+    else
+      h2 Hiện không có bài đăng nào!
+

@@ -1,0 +1,73 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/auth/login.css")
+  link(rel="stylesheet", href="/css/pages/auth/register.css")
+block body
+  .container
+    .loginform
+      .loginimg
+        
+        .loginof
+            p Hoặc bằng
+            #mxh 
+              a(href="/auth/facebook").hovf.bx.bxl-facebook-circle.bx-md
+              a(href="/404").hovt.bx.bxl-twitter.bx-md
+              a(href="/auth/google").hovg.bx.bxl-google.bx-md
+            .ask
+              p Bạn đã có tài khoản?
+              a.bntadd(href="/auth/login") Đăng nhập
+      form(action="/auth/register", method="POST")#dangky.bo.bong
+        .form-group
+          .formitem
+            h1 Đăng ký
+            .formdky
+              .odk
+                b.ngang
+                  p Nội dung có dấu 
+                  .sao *
+                  p là bắt buộc
+                .ngang
+                  h3 Thông tin tài khoản 
+                  .sao *
+                input.odn(type="text" name="username" required placeholder="Tên đăng nhập *" value="")
+                input.odn(type="text" name="email" required placeholder="Địa chỉ email *" value="")
+                input.odn(type="password" name="password"  required minlength="6" placeholder="Tạo mật khẩu ít nhất 6 ký tự *" value="")
+                input.odn(type="password" name="cpassword" required minlength="6" placeholder="Nhập lại mật khẩu *" value="")
+                .ngang
+                  h3 Thông tin cá nhân 
+                  span.sao * 
+                input.odn(type="text" name="name" required placeholder="Họ và tên *" value="")
+                input.odn(type="text" name="phone" required placeholder="Số điện thoại *" value="")
+                input.odn(type="text" name="idtex" required placeholder="Mã số thuế cá nhân/ CMND *" value="")
+                .ngang
+                  h3 Địa chỉ liên hệ
+                  .sao *
+                select#city(name="city" required).odn
+                  option(value='' disabled selected style="text-alile") Chọn tỉnh thành
+                select#district(name="district" required).odn
+                  option(value='' disabled selected) Chọn quận huyện
+                select#ward(name="ward" required).odn
+                  option(value='' disabled selected) Chọn phường xã
+                input.odn(type="text" name="street", placeholder="Nhập địa chỉ cụ thể: Số nhà/Đường/Ngách...(Không bắt buộc)" value="")
+
+                .oask
+                  p Bạn là?
+                  span
+                    input(type="radio" name="sex" value="Nam" id="boy" checked)
+                    label(for="boy") Nam 
+                  span
+                    input(type="radio" name="sex" value="Nữ" id="girl") 
+                    label(for="girl") Nữ
+                  p Bạn thuộc?
+                  span
+                    input(type="radio" name="type" value="Cá nhân" checked id="cn") 
+                    label(for="cn") Cá nhân
+                  span
+                    input(type="radio" name="type" value="Công ty" id="ct") 
+                    label(for="ct") Công ty 
+                .giuangang(style="margin-top: 20px;")
+                  input.checkbox(type="checkbox" name="yes" checked id="yes") 
+                  label(for="yes")  Tôi đồng ý với điều khoản dịch vụ của MOWeb
+          input.bntsm(type="submit" value="Đăng ký")
+  

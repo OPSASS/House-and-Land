@@ -1,0 +1,600 @@
+extends ../../layout
+
+
+block link
+  link(rel="stylesheet", href="/css/pages/post/dang-tin-bds.css")
+
+block body
+  .container
+    if user
+      .link.font5
+        a(href="/") Trang chủ 
+        p > Đăng tin
+      #step1  
+        form#formPost(action="/posts/dang-tin-bds", method="post", enctype="multipart/form-data" name="formPost") 
+          .khung
+            .khungdang
+              .til
+                h1.font4(style="padding-top: 20px") Thông tin cơ bản
+                div                
+                  span Thông tin có dấu
+                  span.sao (*)
+                  span là bắt buộc
+              .formdang
+                h4 Nhu cầu của bạn là?
+                .check
+                  label.an.tablinks Bán
+                    input(type="radio", name="need", value="Bán", checked)
+                    .checkmark Bán
+                  label.an.tablinks Cho thuê
+                    input(type="radio", name="need", value="Cho thuê")
+                    .checkmark Cho thuê
+                  label.an.tablinks Sang nhượng
+                    input(type="radio", name="need", value="Sang nhượng")
+                    .checkmark Sang nhượng
+                div
+                  div(style="display: none;")
+                    input(type="text", name="userId", value=user._id)
+                    input(type="text", name="name", value=user.name)
+                    if user.email
+                      input(type="text", name="email", value=user.email)
+                    input(type="text", name="phone", value=user.phone)
+                    input(type="text", name="address", value=address_us)
+                    input(type="text", name="profilePicture", value=user.profilePicture)
+                    input(type="text", name="slug", value="")
+                    
+                  div
+                    h2.font4 Thông tin bài đăng
+                    .doc
+                      .ngang(style="margin-top:20px;") 
+                        h4 Tiêu đề bài đăng
+                        p.sao *
+                      input(type="text", name="title", onkeyup="charTitle(this)", placeholder="VD: Bán nhà mặt đường 40m2 Huyện Gia Lâm ...", value="", required)
+                    span#textTitle
+                    .doc
+                      .ngang
+                        h4 Nội dung bài đăng
+                        p.sao * 
+                      textarea#textarea(name="desc", onkeyup="charCount(this)" ,placeholder="Nhập nội dung về bài đăng của bạn. Ví dụ: Nhà có vị trí mặt đường, gần bệnh viện, gần chợ ... ", value="", required)
+                    span#textCount
+                    div
+                      h2.font4 Thông tin bất động sản 
+                      .ngang
+                        h4 Loại hình bất động sản
+                        p.sao *
+                      .loaihinh
+                        .tabcontent
+                          select#ban-s(name="loai", required)
+                            option(value='' disabled selected style="text-align: center;") --Chọn loại bất động sản--
+                            option(value='' disabled) --Bán--
+                            option(value='Bán đất thổ cư') Bán đất thổ cư
+                            option(value='Bán đất nền dự án') Bán đất nền dự án
+                            option(value="Bán đất mặt bằng") Bán đất mặt bằng
+                            option(value='Bán đất nông nghiệp') Bán đất nông nghiệp
+                            option(value='Bán nhà riêng') Bán nhà riêng
+                            option(value="Bán căn hộ, villa") Bán căn hộ, villa 
+                            option(value='Bán nhà mặt phố') Bán nhà mặt phố
+                            option(value='Bán căn hộ chung cư') Bán căn hộ chung cư
+                            option(value='Bán biệt thự') Bán biệt thự
+                            option(value="Bán kho, nhà sưởng") Bán kho, nhà sưởng 
+                            option(value='' disabled) --Cho thuê--
+                            option(value='Cho thuê đất') Cho thuê đất
+                            option(value="Cho thuê mặt bằng") Cho thuê mặt bằng
+                            option(value="Cho thuê đất canh tác") Cho thuê đất canh tác  
+                            option(value='Cho thuê nhà riêng') Cho thuê nhà riêng
+                            option(value="Cho thuê nhà trọ") Cho thuê nhà trọ
+                            option(value='Cho thuê căn hộ chung cư') Cho thuê căn hộ chung cư
+                            option(value='Cho thuê biệt thự') Cho thuê biệt thự
+                            option(value='Cho thuê nhà mặt phố') Cho thuê nhà mặt phố
+                            option(value="Cho thuê văn phòng") Cho thuê văn phòng
+                            option(value="Cho thuê cửa hàng") Cho thuê cửa hàng
+                            option(value="Cho thuê kho, nhà sưởng") Cho thuê kho, nhà sưởng
+                            option(value='' disabled) --Sang nhượng--
+                            option(value='Sang nhượng đất') Sang nhượng đất
+                            option(value='Sang nhượng nhà riêng') Sang nhượng nhà riêng
+                            option(value='Sang nhượng căn hộ chung cư') Sang nhượng căn hộ chung cư
+                            option(value='Sang nhượng biệt thự') Sang nhượng biệt thự
+                            option(value='Sang nhượng nhà mặt phố') Sang nhượng nhà mặt phố
+                            option(value="Sang nhượng cửa hàng") Sang nhượng cửa hàng
+                            option(value='Khác') Khác
+                      #tt-them
+                        .chon 
+                          h4 Giấy tờ pháp lý
+                          label.giay(for="so-do") Sổ đỏ/Sổ hồng
+                            input#so-do(type="radio", name="giay_to" value="Sổ đỏ/Sổ hồng")
+                            .giay_to Sổ đỏ/Sổ hồng
+                          label.giay(for="hop-dong") Hợp đồng mua bán
+                            input#hop-dong(type="radio", name="giay_to" value="Hợp đồng mua bán")
+                            .giay_to Hợp đồng mua bán
+                          label.giay(for="chuyen-nhuong") Giấy chuyển nhượng/Sang tên
+                            input#chuyen-nhuong(type="radio", name="giay_to" value="Giấy chuyển nhượng/Sang tên")
+                            .giay_to Giấy chuyển nhượng/Sang tên
+                          label.giay(for="giay_to-khac") +
+                            input#giay_to-khac(type="radio", name="giay_to" value="giay-khac")
+                            .giay_to +
+                        .o3x1
+                          .t50
+                            h4 Số phòng ngủ
+                            .number-input
+                              p.an(onclick="this.parentNode.querySelector('input[type=number]').stepDown()") -
+                              input(min="0" value="0" type="number" name="so_phong_ngu" placeholder="0")
+                              p.an.plus(onclick="this.parentNode.querySelector('input[type=number]').stepUp()") +
+                          .t50
+                            h4 Số phòng tắm
+                            .number-input
+                              p.an(onclick="this.parentNode.querySelector('input[type=number]').stepDown()") -
+                              input(min="0" value="0" type="number" name="so_phong_tam" placeholder="0")
+                              p.an.plus(onclick="this.parentNode.querySelector('input[type=number]').stepUp()") +
+                          .t50
+                            h4 Số tầng
+                            .number-input
+                              p.an(onclick="this.parentNode.querySelector('input[type=number]').stepDown()") -
+                              input(min="0" value="0" type="number" name="so_tang" placeholder="0")
+                              p.an.plus(onclick="this.parentNode.querySelector('input[type=number]').stepUp()") +
+                        h4 Nội thất
+                        input(type="text", name="noi-that", placeholder="VD: Nội thất đầy đủ, Không có nội thất..." style="width:64%;")
+                
+                      .ngangnhieu(style="margin-top:20px;") 
+                        .doc
+                          .ngang
+                            h4 Địa chỉ bất động sản
+                            p.sao *
+                          .ngang
+                            select#city(name="city" required)
+                              option(value='' disabled selected style="text-alile") Chọn tỉnh thành
+                            select#district(name="district" required)
+                              option(value='' disabled selected) Chọn quận huyện
+                            select#ward(name="ward" required)
+                              option(value='' disabled selected) Chọn phường xã
+                            input(type="text" name="street", placeholder="Nhập địa chỉ cụ thể: Số nhà/Tên đường/Ngách...", value="", required style="width: 315px;")
+                      .doc
+                        .ngang
+                          h4 Đường vào
+                        input(type="text", name="way", placeholder="VD: Cách mặt đường đi vào 100m", value="")
+                      .o3x1-custom 
+                        .doc
+                          .ngang
+                            h4 Diện tích
+                            p.sao *
+                          input#aria-input(type="number", name="area", placeholder="40", value="", required)
+                          p.tipe m²
+                        .doc
+                          .ngang
+                            h4 Mức giá
+                            p.sao *
+                          input#money-input(type="number", name="money", placeholder="1.600.000.000", value="" )
+                          #gia_tri
+                        .doc
+                          .ngang
+                            h4 Đơn vị
+                            p.sao *
+                          mixin SelectBox(name, options)
+                            .select-box
+                              .select-box-current(tabindex="1")
+                                each option, index in options
+                                  .select-box-value
+                                    input.select-box-input(type="radio" id=index value=option.value name="currency" checked=option.checked)
+                                    p.select-box-input-text #{option.name}
+                                .select-box-icon.bx.bx-chevron-down
+                              ul.select-box-list
+                                each option, index in options
+                                  li
+                                    label.select-box-option(for=index aria-hidden) #{option.name}
+                                  
+                          +SelectBox('currency', [
+                            {name: 'VNĐ', value: 'VNĐ', checked: true},  
+                            {name: 'Thỏa thuận', value: 'Thỏa thuận'},
+                          ])
+                      
+                      
+
+                    h2.font4 Hình Ảnh hoặc Video
+                    .oimg.bo  
+                      label.iimg.an(for="files")
+                        .iconup
+                        p(style="font-size: 16px;") Thêm hình ảnh hoặc video
+                        p.sm(style="font-size: 12px;") Tin đăng có ảnh sẽ được quan tâm nhiều hơn và được nhiều lượt liên hệ hơn so với tin không có ảnh.
+                      input(type="file", name="files", id="files", accept=".jpg,.jpeg,.png,.gif,.mp4" hidden multiple) 
+                if user.postTypes
+                  label(for="submit").butt-sm.an Đăng tin
+                else
+                  label(for="next" onclick="next()").butt-sm.an Tiếp tục 
+            .goi-tin
+              .form-tin
+                .ngang
+                  h3 Loại tin đăng
+                  p.sao(style="margin-top: 2px;") *
+                .chose.o3x2
+                  each service in services
+                    div
+                      input.an(type="radio" name="service" onclick="choose_name(this.value)" value=service.svType id=service.svType + "1" required)
+                      label.an(for=service.svType + "1")= service.svName
+
+                  input#timepost(type="text", name='timepost' value="" hidden)
+                
+                #sv-item.bong
+                  each service in services
+                    if service.svType == 'advance'
+                      #advance
+                        .sv-ad.sv-name
+                          p.f24= service.svName
+                        .sv-colu
+                          .money
+                            .f30.sv-price-text= service.svPrice.toLocaleString('it-IT') 
+                            p(style="font-size:20px")  đ
+                        .sv-info 
+                          p Được đăng tối đa #{service.svNum} tin
+                          p Thời hạn tin đăng #{service.svTime} ngày
+                          .sv-desc-text= service.svDesc
+                    else if service.svType == 'vip'
+                      #vip
+                        .sv-vp.sv-name
+                          p.f24= service.svName
+                        .sv-colu
+                          .money
+                            .f30.sv-price-text= service.svPrice.toLocaleString('it-IT') 
+                            p(style="font-size:20px")  đ
+                        .sv-info 
+                          p Được đăng tối đa #{service.svNum} tin
+                          p Thời hạn tin đăng #{service.svTime} ngày
+                          .sv-desc-text= service.svDesc
+                    else 
+                      #basic
+                        .sv-bs.sv-name
+                          p.f24= service.svName
+                        .sv-colu
+                          .money
+                            .f30.sv-price-text= service.svPrice.toLocaleString('it-IT') 
+                            p(style="font-size:20px")  đ
+                        .sv-info 
+                          p Được đăng tối đa #{service.svNum} tin
+                          p Thời hạn tin đăng #{service.svTime} ngày
+                          .sv-desc-text= service.svDesc
+                #bill
+                  #vip-bill
+                    each service in services
+                      if service.svType == 'vip'
+                        b.bill-name= "Loại gói: " + service.svName
+                        .bill-price
+                          p= "Giá gói: " + service.svPrice.toLocaleString('it-IT') + " VNĐ/Gói"
+                          - const price = service.svPrice / (299 / 35)
+                            div
+                            p= "Giá lẻ: " + price.toLocaleString('it-IT') + " VNĐ/Tin"
+                          h3 Gói bạn chọn
+                          .bill-chose
+                            div 
+                              input#full-v.an(type="radio" name="goi-v"  onclick="choose(this.placeholder)" value="full"  placeholder=service.svPrice required)
+                              label.an.ml5(for="full-v") Gói full
+                            div
+                              input#tin-v.an(type="radio" name='goi-v' onclick="choose(this.placeholder)" value="tin" placeholder=price )
+                              label.an.ml5(for="tin-v") Gói tin
+                  #advance-bill
+                    each service in services
+                      if service.svType == 'advance'
+                        b.bill-name= "Loại gói: " + service.svName
+                        .bill-price
+                          p= "Giá gói: " + service.svPrice.toLocaleString('it-IT') + " VNĐ/Gói"
+                          - const price = service.svPrice / (199 / 30)
+                            div
+                            p= "Giá lẻ: " + price.toLocaleString('it-IT') + " VNĐ/Tin"
+                          h3 Gói bạn chọn
+                          .bill-chose
+                            div
+                              input#full-a.an(type="radio" name="goi-a"  onclick="choose(this.value)" value=service.svPrice required) 
+                              label.an.ml5(for="full-a") Gói full
+                            div
+                              input#tin-a.an(type="radio" name='goi-a' onclick="choose(this.value)" value=price)
+                              label.an.ml5(for="tin-a") Gói tin
+                  #basic-bill
+                    each service in services
+                      if service.svType == 'basic'
+                        b.bill-name= "Loại gói: " + service.svName
+                        .bill-price
+                          p= "Giá gói: " + service.svPrice.toLocaleString('it-IT') + " VNĐ/Gói"
+                          - const price = service.svPrice / 3.96
+                            div
+                            p= "Giá lẻ: " + price.toLocaleString('it-IT') + " VNĐ/Tin"
+                          h3 Gói bạn chọn
+                          .bill-chose
+                            div
+                              input#full-b.an(type="radio" name="goi-b"  onclick="choose(this.value)" value=service.svPrice required) 
+                              label.an.ml5(for="full-b") Gói full
+                            div
+                              input#tin-b.an(type="radio" name='goi-b' onclick="choose(this.value)" value=price)
+                              label.an.ml5(for="tin-b") Gói tin
+                      
+
+                  h3 Đơn giá:
+                  p Giá gói đã chọn:
+                  .ngang
+                    #gia 0 
+                    .ml5 VNĐ
+                  p VAT 10%:
+                  .ngang 
+                    #vat 0
+                    .ml5 VNĐ
+                  p Tổng tiền:
+                  .ngang
+                    .tong 0
+                    .ml5 VNĐ
+
+      #step2
+        form#formPut(action="/user/"+user._id+"?_method=PUT", method="POST" name="formPut") 
+          .step-form 
+            .step1.giuadoc
+              .bullet
+              .tron.scf
+                .bx.bx-check(style="color: #fff;") 
+              b.tscf Bài Đăng
+            .step2.giuadoc
+              .bullet1
+              .tron.err 
+                p 2
+              b Thanh toán 
+            .step3.giuadoc
+              .tron.err
+                p 3
+              b.chuxam Xác nhận và Đăng bài
+          #checkout
+            .ngang.bong
+              .back-img.bo
+              #bills
+                h2 Hóa đơn dịch vụ
+                .bill-info
+                  each service in services
+                    if service.svType === 'vip'
+                      #vbill
+                        p Loại gói: #{service.svName}
+                        p Giá gói: #{service.svPrice.toLocaleString('it-IT')} VNĐ
+                        - const price = service.svPrice / 25
+                          p Giá lẻ: #{price.toLocaleString('it-IT')} VNĐ
+                        .giuangang Thành tiền: 
+                          .tong(style="margin-left: 5px") 0
+                          .ml5 VNĐ
+                    if service.svType === 'advance'
+                      #abill
+                        p Loại gói: #{service.svName}
+                        p Giá gói: #{service.svPrice.toLocaleString('it-IT')} VNĐ
+                        - const price = service.svPrice / 25
+                          p Giá lẻ: #{price.toLocaleString('it-IT')} VNĐ
+                        .giuangang Thành tiền: 
+                          .tong(style="margin-left: 5px") 0
+                          .ml5 VNĐ
+                    else
+                      #bbill
+                        p Loại gói: #{service.svName}
+                        p Giá gói: #{service.svPrice.toLocaleString('it-IT')} VNĐ
+                        - const price = service.svPrice / 25
+                          p Giá lẻ: #{price.toLocaleString('it-IT')} VNĐ
+                        .giuangang Thành tiền: 
+                          .tong(style="margin-left: 5px") 0
+                          .ml5 VNĐ
+                  
+                i(style="font-size: 12px") Giá trên đã bao gồm thuế VAT 10%
+              #sv-bill
+                .form-bill
+                  h3 Thông tin thanh toán
+                  img(src="/img/napas.png", alt="").logonh
+                  .infor
+                    p Tên chủ thẻ:
+                    input(type="text" name="nameCard" placeholder="Nhập tên của bạn")
+                    p Số thẻ:
+                    input(type="text" name="numCard" placeholder="Nhập số thẻ")
+                    .ngangnhieu(style="width: 340px")
+                      div
+                        p Ngày phát hành:
+                        input(style="width: 120px" type="text" name="dateCard" placeholder="MM/YY")
+                      div
+                        p Mã giảm giá (nếu có):
+                        input(style="width: 200px" type="text" name="gcode" placeholder="Nhập mã giảm giá")
+                    input(type="text", name="userId", value=user._id hidden)
+                    input#typeput(type="text", name="postType" value="" hidden)
+
+                  .qr-code
+                    p Hoặc quét mã QR
+                    img#t-qr(src='/img/T-QR.png' alt='').qr
+                    img#v-qr(src='/img/VIP-QR.png' alt='').qr
+                    img#b-qr(src='/img/CB-QR.png' alt='').qr
+                    
+                  img(src="/img/banknet-bank.png", alt="").dsnh
+
+            .butt-next
+              label(for="back" onclick="back()" style="margin-right: 10px").butt-sm.an Quay lại 
+              label.butt-sm.an(onclick="next2()") Thanh Toán
+      #step3 
+        .step-form 
+          .step1.giuadoc
+            .bullet
+            .tron.scf
+              .bx.bx-check(style="color: #fff;") 
+            b.tscf Bài Đăng
+          .step2.giuadoc
+            .bullet(style="width: 35%; margin-left: 560px")
+            .tron.scf
+              .bx.bx-check(style="color: #fff;") 
+            b.tscf Thanh toán 
+          .step3.giuadoc
+            .tron.scf
+              .bx.bx-check(style="color: #fff;") 
+            b.tscf Xác nhận và Đăng bài
+        .success-checkmark
+          .check-icon
+            span.icon-line.line-tip
+            span.icon-line.line-long
+            .icon-circle
+            .icon-fix
+        h3(style="text-align: center;") Đăng bài thành công!
+    
+    //-  tự chuyển trang
+    else 
+      meta(http-equiv = "refresh" content = "0; url = /auth/login")
+block script 
+  script(src="/js/more.js")
+  script(src="https://code.jquery.com/jquery-3.2.1.min.js")
+  script(src="/js/imgshows.js")
+  script(src="/js/sort.select.js")
+  script(type="text/javascript").
+    var id = document.querySelector('input[name=userId]').value;
+    
+    function next() {
+      submitOK = "true";
+      let x = document.querySelector('input[name=title]').value;
+      if (x == "") {
+        alert("Vui lòng điền đầy đủ thông tin và thử lại!");
+        return false;
+      }
+
+      if (submitOK == "false") {
+        return false;
+      }
+      else {
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+        document.getElementById('step3').style.display = 'none';
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    }
+
+    function next2() {
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('step3').style.display = 'block';
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      submitTwoForms();
+    } 
+
+    function submitTwoForms() {
+      var form = $("#formPut");
+      $.ajax({
+        url: "/user/"+id+"?_method=PUT",
+        data : form.serialize(),
+        type : "POST",
+        success: function(){
+          $("#formPost").submit();
+        }
+      });
+      return false;
+    }
+        
+
+    
+
+    function back() {
+      document.getElementById('step1').style.display = 'block';
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('step3').style.display = 'none';
+    }
+    
+    
+    function choose_name(type) {
+      const ad = document.getElementById('advance');
+      const adb = document.getElementById('advance-bill');
+      const vip = document.getElementById('vip');
+      const vipb = document.getElementById('vip-bill');
+      const basic = document.getElementById('basic');
+      const basicb = document.getElementById('basic-bill');
+      const vb = document.getElementById('vbill');
+      const ab = document.getElementById('abill');
+      const bb = document.getElementById('bbill');
+      const tqr = document.getElementById('t-qr');
+      const vqr = document.getElementById('v-qr');
+      const bqr = document.getElementById('b-qr');
+      document.getElementById('typeput').value = type;
+      
+      if (type == "advance") {
+        var add = new Date(432000000).getTime();
+        ad.style.display = "block";
+        adb.style.display = "block";
+        ab.style.display = "block";
+        tqr.style.display = "block";
+        vip.style.display = "none";
+        vipb.style.display = "none";
+        vb.style.display = "none";
+        vqr.style.display= "none";
+        basic.style.display = "none";
+        basicb.style.display = "none";
+        bb.style.display = "none";
+        bqr.style.display = "none";
+      } else if (type == "vip") {
+        var add = new Date(604800000).getTime();
+        ad.style.display = "none";
+        adb.style.display = "none";
+        ab.style.display = "none";
+        tqr.style.display = "none";
+        vip.style.display = "block";
+        vipb.style.display = "block";
+        vb.style.display = "block";
+        vqr.style.display= "block";
+        basic.style.display = "none";
+        basicb.style.display = "none";
+        bb.style.display = "none";
+        bqr.style.display = "none";
+      } else {
+        var add = new Date(259200000).getTime();
+        ad.style.display = "none";
+        adb.style.display = "none";
+        ab.style.display = "none";
+        tqr.style.display = "none";
+        vip.style.display = "none";
+        vipb.style.display = "none";
+        vb.style.display = "none";
+        vqr.style.display= "none";
+        basic.style.display = "block";
+        basicb.style.display = "block";
+        bb.style.display = "block";
+        bqr.style.display = "block";
+      }
+      var now = new Date().getTime();
+      var news = now + add;
+      var times = new Date(news);
+      document.getElementById('timepost').value = times;
+    }
+
+    function choose(gia) {
+      const hient = document.getElementsByClassName("tong");
+      const vat = gia * 0.1;
+      const tong = parseInt(gia) + parseInt(vat);
+      document.getElementById("gia").innerHTML = gia.toLocaleString('it-IT');
+      document.getElementById("vat").innerHTML = vat.toLocaleString('it-IT');
+      for (let i = 0; i < hient.length; i++) {
+        hient[i].innerHTML = tong.toLocaleString('it-IT');
+      }
+
+    }
+
+    document.querySelector("#money-input").oninput = (function(e) {
+        var money = document.getElementById('money-input')
+        var aria = document.getElementById('aria-input')
+        var ty = money.value / 1000000000;
+        var trieu = money.value / aria.value / 1000000;
+        document.getElementById("gia_tri").innerHTML = ty.toFixed(1) + " tỷ ~ " + trieu.toFixed(1) + " triệu/m²";
+    })
+    
+    //- add input in select value = "Khác"
+    $(document).ready(function() {
+      $('#ban-s').change(function() {
+        if ($(this).val() == 'Khác') {
+          $('#khac').css('display', 'block');
+          
+        } else {
+          $('#khac').css('display', 'none');
+        }
+      });
+      
+      $('#thue-s').change(function() {
+        if ($(this).val() == 'Khác') {
+          $('#khac').css('display', 'block');
+        } else {
+          $('#khac').css('display', 'none');
+        }
+      });
+      $('#nhuong-s').change(function() {
+        if ($(this).val() == 'Khác') {
+          $('#khac').css('display', 'block');
+        } else {
+          $('#khac').css('display', 'none');
+        }
+      });
+    });

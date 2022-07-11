@@ -1,0 +1,97 @@
+.buttacc {
+    float: right;
+    padding: 20px;
+    margin-right: 10px;
+}
+
+.buttacc * {
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #333333;
+    color: aliceblue;
+    margin-left: 20px;
+    transition: 0.5s;
+}
+
+.acc:hover {
+    background-color: rgb(1, 185, 1);
+    color: white;
+}
+
+.una:hover {
+    background-color: rgb(217, 36, 36);
+    color: white;
+}
+
+.imgposts {
+    width: 94%;
+    margin: 30px;
+}
+
+.imgbig {
+    width: 98%;
+    height: 350px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    filter: blur(5px);
+}
+
+.imgbig img {
+    object-fit: contain;
+}
+
+.imgsmall {
+    width: auto;
+    max-width: 98%;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.imgs {
+    width: 100%;
+    height: 110px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.thumbnail{
+	object-fit: cover;
+	cursor: pointer;
+    opacity: 0.4;
+	margin: 5px;
+	border: 2px solid black;
+}
+
+.thumbnail:hover{
+	opacity: 1;
+}
+
+.actives {
+	opacity: 1;
+}
+
+.leng {
+    position: absolute; 
+    right: 10px; 
+    bottom: 10px;
+    padding: 6px;
+    background-color: black;
+    color: white;
+}
+
+.nuttron{
+    color: #999999;
+    padding: 10px;
+    border-radius: 50%;
+    transition: 0.3s;
+    background-color: #333333;
+}
+
+.nuttron:hover {
+    padding: 12px;
+    margin: -2px;
+    color: white;
+    background-color: black;
+}

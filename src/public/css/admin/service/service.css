@@ -1,0 +1,166 @@
+.add-service {
+    width: 80%;
+}
+
+.add-service h4 {
+    padding: 10px 0;
+}
+
+.infor-service label {
+    margin-right: 50px;
+}
+
+.o3x3 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.oservice {
+    width: 100%;
+    height: 30px;
+    padding-left: 10px;
+}
+
+textarea {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 300px;
+    min-height: 100px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.butt-sm {
+    margin: 30px 40%;
+}
+
+.butt-sm:hover {
+    margin: 28px 39.8%;
+}
+
+.sv-list {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.sv-desc-text {
+    white-space: pre-wrap;
+}
+
+.sv-item {
+    width: 320px;
+    height: auto;
+    padding-bottom: 30px;
+    background-color: rgb(249, 249, 249);
+}
+
+.sv-item * {
+    margin-top: 10px;
+}
+
+.sv-name {
+    width: 100%;
+    height: 70px;
+    margin-top: -10px;
+}
+
+.f24 {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 25px;
+    color: white;
+    text-shadow: #333333 0px 0px 2px;
+}
+
+.f30 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.sv-bs {
+    background: linear-gradient(120deg, #d5d5d5, #acaba9, #959595);
+}
+
+.sv-ad {
+    background: linear-gradient(-90deg, #2974ad, #437fac, #43b7b8);
+}
+
+.sv-vp {
+    background: linear-gradient(90deg, #ea5a6f, #de791e, #fccf3a);
+}
+
+.sv-price {
+    width: 100%;
+    height: 70px;
+    margin-top: -10px;
+    font-size: 16px;
+    font-weight: 550;
+    padding: 10px;
+    color: black;
+}
+
+.sv-info {
+    color: #777777;
+}
+
+.sv-info p {
+    padding-bottom: 10px;
+}
+
+.sv-colu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.money {
+    display: flex;
+    margin-top: -10px;
+}
+
+.duoi {
+    margin-top: 26px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.edit * {
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #333333;
+    margin-left: 5px;
+}
+
+.edit {
+    position: absolute;
+    top: -20px;
+    right: -45px;
+    transition: 0.5s;
+}
+
+.deleteh {
+    color: #ff0000;
+}
+
+.deleteh:hover {
+    background-color: #ff0000;
+    color: #333333;
+}
+
+.edith:hover {
+    background-color: #999999;
+    color: #333333;
+}
+
+.sub-ed {
+    margin: 50px 30%;
+}
+
+.sub-ed * {
+    margin-left: 20px;
+}

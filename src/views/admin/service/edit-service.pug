@@ -1,0 +1,89 @@
+extends ../layout-ad
+
+block link
+  link(rel="stylesheet", href="/css/admin/service/service.css")
+  
+block li1
+  li
+    a(href='/admin')
+      i.bx.bx-home-alt-2
+      span.links_name Trang quản trị
+    span.tooltip Trang quản trị
+block li2
+  li
+    a(href='/admin/users')
+      i.bx.bx-user
+      span.links_name Người dùng
+    span.tooltip Quản lý người dùng
+block li3
+  li
+    a(href='/admin/posts')
+      i.bx.bx-book-content
+      span.links_name Bài đăng
+    span.tooltip Quản lý bài viết
+//- block li4
+//-   li
+//-     a(href='/admin/chat')
+//-       i.bx.bx-chat
+//-       span.links_name Tin nhắn
+//-     span.tooltip Tin nhắn
+  
+block li5
+  li
+    a(href='/admin/chart')
+      i.bx.bx-pie-chart-alt-2
+      span.links_name Biểu đồ thống kê
+    span.tooltip Biểu đồ thống kê
+block li6
+  li
+    a(href='/admin/feedback')
+      i.bx.bxs-envelope
+      span.links_name Phản hồi
+    span.tooltip Phản hồi
+block li7
+  li
+    a(href='/admin/service').choose
+      i.bx.bx-cart-alt
+      span.links_name(style="color: #222222;") Gói dịch vụ
+    span.tooltip Gói dịch vụ
+
+block body
+  .container
+    h1.title Sửa gói dịch vụ
+    .add-service
+      form(action="/admin/service/" + service.id + "?_method=PUT", method="POST")
+        h4 Loại gói dịch vụ
+        .infor-service
+          if service.svType === "basic"
+            input#basic(type="radio", name="svType", value="basic", checked="checked")
+            label(for="basic").an  Gói cơ bản
+            input#advance(type="radio", name="svType", value="advance")
+            label(for="advance").an  Gói Thường
+            input#vip(type="radio", name="svType", value="vip")
+            label(for="vip").an  Gói VIP
+          else if service.svType === "advance"
+            input#basic(type="radio", name="svType", value="basic")
+            label(for="basic").an  Gói cơ bản
+            input#advance(type="radio", name="svType", value="advance", checked="checked")
+            label(for="advance").an  Gói Thường
+            input#vip(type="radio", name="svType", value="vip")
+            label(for="vip").an  Gói VIP
+          else
+            input#basic(type="radio", name="svType", value="basic")
+            label(for="basic").an  Gói cơ bản
+            input#advance(type="radio", name="svType", value="advance")
+            label(for="advance").an  Gói Thường
+            input#vip(type="radio", name="svType", value="vip",checked="checked")
+            label(for="vip").an  Gói VIP
+        h4 Thông tin gói
+        .form-service
+          .o4xn
+            input.oservice(type="text", name="svName", placeholder="Tên gói dịch vụ" value=service.svName)
+            input.oservice(type="text", name="svPrice", placeholder="Giá gói dịch vụ" value=service.svPrice)
+            input.oservice(type="text", name="svNum", placeholder="Số lượng tin đăng" value=service.svNum)
+            input.oservice(type="text", name="svTime", placeholder="Thời gian xuất hiện mỗi tin" value=service.svTime)
+          textarea(name="svDesc", placeholder="Mô tả gói dịch vụ (nếu có)")= service.svDesc
+          input#submit(type="submit", value="Cập nhật" hidden)
+  .sub-ed
+    a(href="/admin/service").nut.an Quay lại
+    label(for="submit").nut.an Cập nhật

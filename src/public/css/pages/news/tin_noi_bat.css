@@ -1,0 +1,54 @@
+.tr1
+{
+    width: 100%;
+    height: 500px;
+}
+.fontg
+{
+    font-size: 30px;
+    color: rgb(211, 35, 35);
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+.fonth
+{
+    font-size: 10px;
+    color: rgb(102, 98, 98);
+    margin-top: 30px;
+}
+.fontj
+{
+    font-size: 15px;
+    color: rgb(10, 10, 10);
+    margin-top: 10px;
+}
+.fontk
+{
+    font-size:20 px;
+    color: rgb(10, 10, 10);
+    margin-top: 20px;
+    font-weight: bold;
+}
+.tr3
+{
+    background-image: url('/img/news/n1.jpg');
+    width: 100%;
+    height: 600px;
+    background-size: cover;
+    margin-top: -90px;
+}
+.fontz
+{
+    font-size: 15px;
+    color: rgb(4, 59, 4);
+    text-align: center;
+}
+.tr5
+{
+    background-image: url('/img/news/n2.jpg');
+    width: 100%;
+    height: 600px;
+    background-size: cover;
+    margin-top: 50px;
+}

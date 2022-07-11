@@ -1,0 +1,59 @@
+.ocs {
+    margin-top: 25px;
+    padding: 15px 10px;
+    width: 24%;
+    height: auto;
+    background-color: white;
+}
+
+.ocs h3 {
+    text-align: right;
+}
+
+.o-icon {
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.money {
+    background-color: #fbb14e;
+}
+
+.new-us {
+    background-color: #f66f6c;
+}
+
+.user {
+    background-color: #ec7eed;
+}
+
+.view {
+    background-color: #6bcae9;
+}
+
+.backts {
+    background: linear-gradient(-90deg, #4a29b7, #13547a);
+    padding-bottom: 150px;
+}
+
+.chart,
+.chart2 {
+    top: 250px;
+    position: absolute;
+}
+
+.chart {
+    width: 58%;
+    padding: 20px;
+    background: #0d1328;
+    color: white;
+}
+
+.chart2 {
+    top: 250px;
+    right: 70;
+    width: 30%;
+    padding: 20px;
+    background: white;
+    color: white;
+}

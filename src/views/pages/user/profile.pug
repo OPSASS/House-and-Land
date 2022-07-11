@@ -1,0 +1,457 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/user/profile.css")
+block body
+  - url = "http://localhost:8800/images/"
+  .container
+    .link.font5
+      a(href="/") Trang chủ 
+      p > Trang cá nhân
+    .mainuser
+      .user-setting.bong.bo
+        .user-setting-form 
+          label.usif(for="profilePicture")
+            if user.profilePicture
+              img.user-avatar(src=user.profilePicture)
+            else
+              img.user-avatar(src="/img/no-avt.png")
+            h4= user.username
+          label(for="Open").giuangang
+            .bx.bxs-user-detail.bx-sm
+            p Thông tin tài khoản
+          label(for="pos").giuangang
+            .bx.bx-book-content.bx-sm
+            p Tin đã đăng
+          label(for="las").giuangang
+            .bx.bx-food-menu.bx-sm
+            p Tin đã hết hạn  
+        .user-auth
+          label(for="pass" style="margin-top: 10px").giuangang
+            .bx.bx-lock.bx-sm
+            p Đổi mật khẩu
+          label(for="dele").giuangang
+            .bx.bx-trash.bx-sm
+            p Xóa tài khoản
+          .giuangang.an(onclick="document.location='/auth/logout'")
+            i.bx.bx-log-out.bx-sm(style="margin-left: -3px;")
+            p(style="margin-left: 10px") Đăng xuất
+          button.tablinks#Open(onclick="opentab(event, 'infor')")
+          button.tablinks(onclick="opentab(event, 'posts')" id="pos")
+          button.tablinks(onclick="opentab(event, 'lass')" id="las")
+          button.tablinks(onclick="opentab(event, 'password')" id="pass")
+          button.tablinks(onclick="opentab(event, 'delete')" id="dele")
+
+      
+      form(action="/user/"+user._id+"?_method=PUT", method="POST", hidden).user-info#infor.tabcontent
+        p Vui lòng cập nhật đầy đủ thông tin để có thể đăng tin
+        .content-if
+          h2(style="padding: 10px 0 20px;") Thông tin cá nhân
+          .content-if
+            #butt
+              lable(for="but" onclick="update()").an Sửa thông tin
+                #but.bx.bx-edit-alt.bx-sm
+            #but2(style="display: none")
+              label(for="sub").an Cập nhật
+                .bx.bx-check.bx-sm
+        .user-info-content
+          .userform.bo.bong
+            .user-items
+              .userit
+                h3 ID của tôi
+              p= user._id
+          if user.username 
+            p(style="display: none")
+          else 
+            label(for="username").userform.bo.bong
+              .user-items
+                .userit
+                  h3 Tên đăng nhập
+                .info Thêm tên đăng nhập
+                input.iput#username(type="text" name="username" value="")
+          label(for="name").userform.bo.bong
+            .user-items
+              .userit
+                h3 Họ và tên
+              if user.name
+                .info= user.name
+                input.iput#name(type="text" name="name" value=user.name)
+              else 
+                .info Thêm Họ và tên 
+                input.iput#name(type="text" name="name" value=user.name)
+          label(for="email").userform.bo.bong
+            .user-items
+              .userit
+                h3 Email
+              if user.email
+                .info= user.email
+                input.iput#email(type="text" name="email" value=user.email)
+              else
+                .info Thêm Email
+                input.iput#email(type="text" name="email" value=user.email)
+          label(for="phone").userform.bo.bong
+            .user-items
+              .userit
+                h3 Số điện thoại
+              if user.phone
+                .info= "(+84)"+user.phone
+                input.iput#phone(type="tel" pattern="[0-9]*" name="phone" value=user.phone)
+              else
+                .info Thêm Số điện thoại
+                input.iput#phone(type="tel" pattern="[0-9]*" name="phone" value=user.phone)
+          label(for="birthday").userform.bo.bong
+            .user-items
+              .userit
+                h3 Ngày sinh
+              if user.birthday
+                .info= new Date(user.birthday).toLocaleDateString()
+                input.iput#birthday(type="date" name="birthday" value=user.birthday)
+              else
+                .info Thêm ngày sinh
+                input.iput#birthday(type="date" name="birthday" value=user.birthday) 
+          .userform.bo.bong(style="z-index: 2")
+            .user-items
+              .userit
+                h3 Giới tính
+              if user.sex
+                .info= user.sex
+                .iput
+                  mixin SelectBox(name, options)
+                    .select-box
+                      .select-box__current(tabindex="1")
+                        each option, index in options
+                          .select-box__value
+                            input.select-box__input(type="radio" id=index value=option.value name="sex" checked=option.checked)
+                            .select-box__input-text #{option.name}
+                        .select-box__icon.bx.bx-chevron-down
+                      ul.select-box__list
+                        each option, index in options
+                          li
+                            label.select-box__option(for=index aria-hidden) #{option.name}
+                          
+                  +SelectBox('Ben', [
+                    {name: 'Nam', value: 'Nam', checked: true}, 
+                    {name: 'Nữ', value: 'Nữ'}, 
+                  ])
+              else 
+                .info Thêm giới tính 
+                .iput
+                  mixin SelectBox(name, options)
+                    .select-box
+                      .select-box__current(tabindex="1")
+                        each option, index in options
+                          .select-box__value
+                            input.select-box__input(type="radio" id=index value=option.value name="sex" checked=option.checked)
+                            .select-box__input-text #{option.name}
+                        .select-box__icon.bx.bx-chevron-down
+                      ul.select-box__list
+                        each option, index in options
+                          li
+                            label.select-box__option(for=index aria-hidden) #{option.name}
+                          
+                  +SelectBox('sex', [
+                    {name: 'Nam', value: 'Nam', checked: true}, 
+                    {name: 'Nữ', value: 'Nữ'}, 
+                  ])
+          .userform.bo.bong#noi3
+            .user-items-select
+              h3 Địa chỉ
+              if user.city
+                #info2= address_us
+                .ngang           
+                  select.iput2#city(name="city" required).odn
+                    option(value=user.city disabled selected style="text-alile")= user.city
+                  select.iput2#district(name="district" required).odn
+                    option(value=user.district disabled selected)= user.district
+                  select.iput2#ward(name="ward" required).odn
+                    option(value=user.ward disabled selected)=  user.ward
+                  input.iput2(type="text" name="street", placeholder="Nhập địa chỉ cụ thể: Số nhà/Đường/Ngách...(Không bắt buộc)" value=user.street)
+
+              else
+                .ngang
+                  #info2 Thêm địa chỉ
+                  .ngang           
+                    select.iput2#city(name="city" required).odn
+                      option(value='' disabled selected style="text-alile") Chọn tỉnh thành
+                    select.iput2#district(name="district" required).odn
+                      option(value='' disabled selected) Chọn quận huyện
+                    select.iput2#ward(name="ward" required).odn
+                      option(value='' disabled selected) Chọn phường xã
+                    input.iput2(type="text" name="street", placeholder="Nhập địa chỉ cụ thể: Số nhà/Đường/Ngách...(Không bắt buộc)" value="")
+
+          input(type="text" name="userId" value=user._id hidden)
+          input#sub(type="submit" value="Cập nhật" hidden)    
+          
+
+      
+      .user-info#posts.tabcontent
+        h2(style="padding: 10px 0 20px;") Tin của bạn
+        if posts.length > 0
+          .o3xn
+            each post in posts.slice(0, 18)
+              a(href="/mua-ban-bds/"+post.slug).opost
+                if post.service === "vip"
+                  .ribbon
+                  .vip-title CẦN BÁN GẤP
+                each upload in uploads
+                  if upload.postId === post.postId
+                    if upload.files[0]
+                      .imgpost
+                        if post.status === "successful"
+                          img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                        img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                        .img-length
+                          .giuangang
+                            span.bx.bx-time(style="margin-right: 3px;")
+                            span= moment(post.createdAt).locale('vi').fromNow()
+                          div
+                            span(style="margin-right: 3px;")= upload.files.length
+                            span.bx.bx-images
+                    else
+                      .imgpost
+                        if post.status === "successful"
+                          img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                        img.oimg(src="/img/no-image.png")
+                        .img-length
+                          .ngang
+                            i.bx.bx-time(style="margin-right: 3px;")
+                            p= moment(post.createdAt).locale('vi').fromNow()
+                .khungtit
+                  h3.haidong= post.title
+                  .ngang
+                    .ngang
+                      i.bx.bx-money-withdraw
+                      if post.currency === "VNĐ"
+                        if post.money / 1000000000 < 1 
+                          b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                        else 
+                          -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                            b#money_fix(style="padding: 0 5px")= ty
+                      else
+                        p &nbsp
+                        b(style="font-size: 14px")= post.currency
+                  .ngang
+                    .ngang
+                      i.bx.bx-area
+                      b(style="padding: 0 5px")= post.area
+                      p m²
+                    .ttnha.ngang(style="margin-top: 0px")
+                      if post.so_tang == 0
+                      else
+                        .ngang 
+                          i.bx.bx-layer-plus
+                          b(style="padding: 0 20px 0 5px")= post.so_tang
+                      if post.so_phong_ngu == 0
+                      else
+                        .ngang 
+                          i.bx.bx-bed
+                          b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                      if post.so_phong_tam == 0
+                      else
+                        .ngang 
+                          i.bx.bx-bath
+                          b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                  
+                  .ngang
+                    i.bx.bx-map-pin
+                    p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                  if post.way 
+                    .ngang
+                      i.bx.bx-purchase-tag-alt
+                      p.haidong(style="padding: 0 5px")= post.way
+                  .ngang
+                    i.bx.bxs-hand-right
+                    b(style="padding: 0 5px")= post.need
+                  .ngang 
+                    i.bx.bx-timer 
+                    b(style="padding: 0 5px") Còn
+                    b= countdown(new Date(post.timepost), null, countdown.DAYS | countdown.HOURS)
+        else
+          .ngang
+            p Bạn chưa đăng tin BDS nào.
+            a(href="/posts/dang-tin-bds" style="margin-left: 5px") Đăng tin mới tại đây!
+          .postupload
+
+      .user-info#lass.tabcontent
+        h2(style="padding: 10px 0 20px;") Tin đã hết hạn của bạn
+        if expiredPosts.length > 0
+          .o3xn
+            each post in expiredPosts.slice(0, 18)
+              a(href="/mua-ban-bds/"+post.slug).opost
+                if post.service === "vip"
+                  if post.need === "Bán"
+                    .ribbon
+                    .vip-title CẦN BÁN GẤP
+                  else if post.need === "Cho thuê"
+                    .ribbon
+                    .vip-title CHO THUÊ GẤP 
+                  else 
+                    .ribbon
+                    .vip-title NHƯỢNG GẤP
+                each upload in uploads2
+                  if upload.postId == post.postId
+                    if upload.files[0]
+                      .imgpost
+                        if post.status === "successful"
+                          img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                        img.oimg(src=url+"posts/"+upload.files[0].fileName)
+                        .img-length
+                          .giuangang
+                            span.bx.bx-time(style="margin-right: 3px;")
+                            span= moment(post.createdAt).locale('vi').fromNow()
+                          div
+                            span(style="margin-right: 3px;")= upload.files.length
+                            span.bx.bx-images
+                    else
+                      .imgpost
+                        if post.status === "successful"
+                          img.ksf.oimg(src="/img/ok.png", alt="alt") 
+                        img.oimg(src="/img/no-image.png")
+                        .img-length
+                          .ngang
+                            i.bx.bx-time(style="margin-right: 3px;")
+                            p= moment(post.createdAt).locale('vi').fromNow()
+                .khungtit
+                  h3.haidong= post.title
+                  .ngang
+                    .ngang
+                      i.bx.bx-money-withdraw
+                      if post.currency === "VNĐ"
+                        if post.money / 1000000000 < 1 
+                          b(style="padding: 0 5px")= post.money / 1000000 + " triệu ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                        else 
+                          -const ty = post.money / 1000000000 + " tỷ ~ " + (post.money / post.area / 1000000).toFixed(1) + " triệu/m²"
+                            b#money_fix(style="padding: 0 5px")= ty
+                      else
+                        p &nbsp
+                        b(style="font-size: 14px")= post.currency
+                  .ngang
+                    .ngang
+                      i.bx.bx-area
+                      b(style="padding: 0 5px")= post.area
+                      p m²
+                    .ttnha.ngang(style="margin-top: 0px")
+                      if post.so_tang == 0
+                      else
+                        .ngang 
+                          i.bx.bx-layer-plus
+                          b(style="padding: 0 20px 0 5px")= post.so_tang
+                      if post.so_phong_ngu == 0
+                      else
+                        .ngang 
+                          i.bx.bx-bed
+                          b(style="padding: 0 20px 0 5px")= post.so_phong_ngu
+                      if post.so_phong_tam == 0
+                      else
+                        .ngang 
+                          i.bx.bx-bath
+                          b(style="padding: 0 20px 0 5px")= post.so_phong_tam
+                  
+                  .ngang
+                    i.bx.bx-map-pin
+                    p.haidong(style="padding: 0 5px")= post.street + ", " + post.ward + ", " + post.district + ", " + post.city
+                  if post.way 
+                    .ngang
+                      i.bx.bx-purchase-tag-alt
+                      p.haidong(style="padding: 0 5px")= post.way
+                  .ngang
+                    i.bx.bxs-hand-right
+                    b(style="padding: 0 5px")= post.need
+                  .ngang 
+                    i.bx.bx-timer 
+                    b(style="padding: 0 5px") Còn
+                    b= countdown(new Date(post.timepost), null, countdown.DAYS | countdown.HOURS)
+        else
+          .ngang
+            p Bạn chưa đăng tin BDS nào.
+            a(href="/posts/dang-tin-bds" style="margin-left: 5px") Đăng tin mới tại đây!
+          .postupload
+
+      .user-info#password.tabcontent
+        h2(style="padding: 10px 0 20px;") Đổi mật khẩu của bạn
+        form(action="/auth/reset/"+user.id, method="POST") 
+          .user-info-content
+            label.userform.bo.bong(for="oldPassword")
+              .user-items
+                .userit
+                  h3 Mật khẩu cũ
+                input(type="text" name="id" value=user.id hidden)
+                input.opass(type="password" name="opassword" id="oldPassword" placeholder="Nhập mật khẩu cũ" required)
+            label.userform.bo.bong(for="newPassword")
+              .user-items
+                .userit
+                  h3 Mật khẩu mới
+                input.opass(type="password" name="password" id="newPassword" placeholder="Nhập mật khẩu mới" required)
+            label.userform.bo.bong(for="cNewPassword")
+              .user-items
+                .userit
+                  h3 Nhập lại mật khẩu
+                input.opass(type="password" name="cpassword" id="cNewPassword" placeholder="Nhập lại mật khẩu mới" required)
+            button.butt(type="submit" style="position: absolute;") Cập nhật
+        
+
+
+      .user-info#delete.tabcontent       
+        h2(style="padding: 10px 0 20px;") Yêu cầu xóa tài khoản của bạn
+        .form-delete
+          h3 Lý do xóa tài khoản
+          p Hãy cho chúng tôi biết lý do bạn muốn xóa tài khoản của mình.
+          if user.googleId || user.facebookId
+            form(action="/user/l2/"+user.id , method="post")
+              input(type="text" name="avt" value=user.profilePicture hidden)
+              input(type="text" name="name" value=user.username hidden)
+              input(type="text" name="userId" value=user._id hidden)
+              select.odelete#reason(name="reason")
+                option(value="" disabled selected) Vui lòng chọn lý do
+                option(value="Tôi không muốn mua bán nữa") Tôi không muốn mua bán nữa
+                option(value="Tôi đã hoàn thành giao dịch") Tôi đã hoàn thành giao dịch 
+                option(value="Tôi không muốn đăng tin nữa") Tôi không muốn đăng tin nữa
+                option(value="khac") Lý do khác
+              input.odelete(type="text" name="other" placeholder="Lý do khác")
+              div
+                input#agree(type="checkbox" name="agree" value="delete")
+                label(for="agree" style="margin-left: 5px") Tôi chắc chắn với yêu cầu xóa tài khoản của mình
+              div
+                button.butt(type="submit" style="margin: 20px 25%") Gửi yêu cầu
+          else
+            form(action="/user/"+user.id , method="post")
+              input(type="text" name="avt" value=user.profilePicture hidden)
+              input(type="text" name="name" value=user.username hidden)
+              input(type="text" name="userId" value=user._id hidden)
+              select.odelete#reason(name="reason")
+                option(value="" disabled selected) Vui lòng chọn lý do
+                option(value="Tôi không muốn mua bán nữa") Tôi không muốn mua bán nữa
+                option(value="Tôi đã hoàn thành giao dịch") Tôi đã hoàn thành giao dịch 
+                option(value="Tôi không muốn đăng tin nữa") Tôi không muốn đăng tin nữa
+                option(value="khac") Lý do khác
+              input.odelete(type="text" name="other" placeholder="Lý do khác")
+              div
+                input#agree(type="checkbox" name="agree" value="delete")
+                label(for="agree" style="margin-left: 5px") Tôi chắc chắn với yêu cầu xóa tài khoản của mình
+              h3 Vui lòng nhập mật khẩu của bạn 
+              input.odelete(type="password" name="cpassword" placeholder="Nhập mật khẩu của bạn" required)
+              div
+                button.butt(type="submit" style="margin: 20px 25%") Gửi yêu cầu
+  form#avts(action="/user/"+user._id+"/avt?_method=PUT", method="POST" enctype="multipart/form-data")
+    input(type="text" name="userId" value=user._id hidden)
+    input#profilePicture(type="file" name="profilePicture" onchange="document.getElementById('avts').submit()" accept=".jpg,.jpeg,.png" hidden)
+   
+block script
+  script(src="/js/update.js")
+  script.
+
+    function opentab(evt, noid) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(noid).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    
+    document.getElementById("Open").click();

@@ -1,0 +1,171 @@
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title #{title} | HOUSE AND LANDS
+    block link
+    link(rel="stylesheet" href="/css/layout.css")
+    link(href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css")
+    link(rel='stylesheet' href='/css/sweetalert2.min.css')
+    link(rel="icon" href="/img/logo.ico")
+    -url = "http://localhost:8800/images/"
+    if user
+      if user.street
+        - address_us = user.street + ", " + user.ward + ", " + user.district + ", " + user.city
+      else 
+        - address_us = user.ward + ", " + user.district + ", " + user.city
+  block nav
+    nav
+      .navtop.chuxam.font2
+        .container
+          .allnav
+            .logo
+              a(href="/").font3.cham.chuxam HOUSE AND LANDS
+            .font2.navbar-layout
+              .dropdown
+                a.nhanh(href="/" class=(title == 'Home') ? 'active' : null) Home
+              .dropdown
+                a.nhanh(href="/" class=(title == 'Mua & Thuê') ? 'active' : null) Mua & Bán
+                .dropdown-content.animate__animated.animate__bounceIn
+                  a(href="/mua-ban/mua-ban-nha") Mua bán nhà
+                  a(href="/mua-ban/mua-nha-mat-pho") Mua nhà mặt phố 
+                  a(href="/mua-ban/mua-can-ho-chung-cu") Mua căn hộ chung cư
+                  a(href="/mua-ban/mua-can-ho-villa") Mua căn hộ, villa 
+                  a(href="/mua-ban/mua-kho-nha-suong") Mua kho, nhà sưởng 
+                  a(href="/mua-ban/mua-mat-bang") Mua mặt bằng
+              .dropdown
+                a.nhanh(href="/" class=(title == 'Dự án') ? 'active' : null) Cho Thuê
+                .dropdown-content.animate__animated.animate__bounceIn
+                  a(href="/cho-thue/thue-can-ho-chung-cu") Thuê căn hộ chung cư      
+                  a(href="/cho-thue/thue-mat-bang") Thuê mặt bằng   
+                  a(href="/cho-thue/thue-van-phong") Thuê văn phòng
+                  a(href="/cho-thue/thue-nha-tro") Thuê nhà trọ 
+                  a(href="/cho-thue/thue-cua-hang") Thuê cửa hàng 
+                  a(href="/cho-thue/thue-kho-nha-suong") Thuê kho, nhà sưởng
+                  
+              .dropdown
+                a.nhanh(href="/" class=(title == 'Chung cư') ? 'active' : null) Sang nhượng
+                .dropdown-content.animate__animated.animate__bounceIn
+                  a(href="/sang-nhuong/sang-nhuong-dat") Sang nhượng đất
+                  a(href="/sang-nhuong/sang-nhuong-nha-rieng") Sang nhượng nhà riêng
+                  a(href="/sang-nhuong/sang-nhuong-can-ho-chung-cu") Sang nhượng căn hộ chung cư
+                  a(href="/sang-nhuong/sang-nhuong-cua-hang") Sang nhượng cửa hàng 
+
+              .dropdown
+                a.nhanh(href="/" class=(title == 'Thổ cư') ? 'active' : null) Thổ cư
+                .dropdown-content.animate__animated.animate__bounceIn
+                  a(href="/tho-cu/mua-ban-dat") Mua bán đất 
+                  a(href="/tho-cu/dat-cho-thue") Đất cho thuê 
+                  a(href="/tho-cu/dat-tho-cu") Đất thổ cư
+                  a(href="/tho-cu/dat-nen-du-an") Đất nền dự án 
+                  a(href="/tho-cu/dat-canh-tac") Đất canh tác
+
+              .dropdown
+                a.nhanh(href="/" class=(title == 'Danh bạ ') ? 'active' : null) Danh bạ
+                .dropdown-content.animate__animated.animate__bounceIn
+                  a(href="/danh-ba/nha-moi-gioi") Nhà môi giới
+                  a(href="/danh-ba/doanh-nghiep") Doanh nghiệp 
+            .ntr
+              if user 
+                a(href="/posts/dang-tin-bds").post.cham  ĐĂNG BÀI
+                p(style="margin:0 10px") |
+                .loginus
+                  if user.profilePicture
+                    img.avtus(src=user.profilePicture)
+                    .users 
+                      if user.username 
+                        .dropclick.an(onclick="Dropclick()")= user.username
+                          i.bx.bx-chevron-down
+                          .dropclick-content#Dropclick
+                            if user.name
+                              a(href="/user/"+user._id) Thông tin cá nhân
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                            else 
+                              a(href="/user/"+user._id) Thêm thông tin
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                      else
+                        .dropclick.an(onclick="Dropclick()") Thêm thông tin
+                          i.bx.bx-chevron-down
+                          .dropclick-content#Dropclick
+                            if user.name
+                              a(href="/user/"+user._id) Thông tin cá nhân
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                            else 
+                              a(href="/user/"+user._id) Thêm thông tin
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                  else
+                    img.avtus(src="/img/no-avt.png")
+                    .users 
+                      if user.username 
+                        .dropclick.an(onclick="Dropclick()")= user.username
+                          i.bx.bx-chevron-down
+                          .dropclick-content#Dropclick
+                            if user.name
+                              a(href="/user/"+user._id) Thông tin cá nhân
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                            else 
+                              a(href="/user/"+user._id) Thêm thông tin
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                      else
+                        .dropclick.an(onclick="Dropclick()") Thêm thông tin
+                          i.bx.bx-chevron-down
+                          .dropclick-content#Dropclick
+                            if user.name
+                              a(href="/user/"+user._id) Thông tin cá nhân
+                              a(href='/auth/logout') ĐĂNG XUẤT
+                            else 
+                              a(href="/user/"+user._id) Thêm thông tin
+                              a(href='/auth/logout') ĐĂNG XUẤT
+              else
+                a(href="/auth/login").post.cham  ĐĂNG BÀI
+                p(style="margin:0 10px") |
+                a.loginus(href="/auth/login")
+                  .giuangang 
+                    i.bx.bxs-user-circle.bx-md(style="margin-right: 5px;")
+                    p(style="color: #999999") ĐĂNG NHẬP
+  block body
+  block footer
+  if user
+    .buttadd
+      if user.isAdmin === true
+        a(href="/admin").back.bx.bxs-bank.bong
+        a(href="/news/newsPost" style="z-index: 100; margin-top: 50px;").back.bx.bx-news.bong
+  footer.bo
+    .container
+      .ftmain
+        div
+          h1.font3 Web BDS Demo:
+            h2 By:
+            .ifn
+              p Name: Pham Ngoc Minh
+              p Msv: 641174
+              p Class: K64CNTTA
+            h3 And
+            .ifn
+              p Name: Nguyễn Thị Kim Oanh
+              p Msv: 642709
+              p Class: K64CNTTA 
+        .ftitem
+          h4 NoCopyright © 2022 MOWeb. All rights reserved.
+        .canft
+          h1.font3 Mạng xã hội: 
+          p Theo dõi MOWeb để biết thêm thông tin 
+          ul.p2
+            li
+              a(href="https://www.facebook.com/Minhdz.ss1" target="_blank").bx.bxl-facebook-circle.bx-md.box-icon 
+            li
+              a(href="https://www.instagram.com/minhpiis/" target="_blank").bx.bxl-instagram.bx-md.box-icon 
+            li
+              a(href="https://mail.google.com/" target="_blank").bx.bxl-gmail.bx-md.box-icon 
+      .bottom
+
+    block chat
+
+
+    script(src='/js/dropclick.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js")
+    script(src="/js/addr.js")
+    script(src='/js/sweetalert2.all.min.js')
+    block script 
